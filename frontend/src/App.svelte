@@ -6,77 +6,83 @@
   let bet_1 = 0
   let bet_2 = 0
   let bet_3 = 0
+  let sound = 0;
+  let path_card = "CARD/WHITE/";
+  let spin = [
+    new Audio("/sounds/spin.mp3"),
+  ];
+  let win = [
+    new Audio("/sounds/win.mp3"),
+  ];
   let list_point = [
-    {id:"1",name:"Royal Flush",poin:25000},
-    {id:"2",name:"5 Of A Kind",poin:10000},
-    {id:"3",name:"Straight Flush",poin:6000},
-    {id:"4",name:"4 Of A Kind",poin:2500},
-    {id:"5",name:"Full House",poin:350},
-    {id:"6",name:"Full",poin:250},
-    {id:"7",name:"Straight",poin:150},
-    {id:"8",name:"3 Of A Kind",poin:100},
-    {id:"9",name:"2 Pair (10 PAIR)",poin:50},
-    {id:"10",name:"Ace Pair",poin:50},
+    {id:"1",code:"RF",name:"Royal Flush",poin:25000},
+    {id:"2",code:"5K",name:"5 Of A Kind",poin:10000},
+    {id:"3",code:"SF",name:"Straight Flush",poin:6000},
+    {id:"4",code:"4K",name:"4 Of A Kind",poin:2500},
+    {id:"5",code:"FH",name:"Full House",poin:350},
+    {id:"6",code:"FL",name:"Full",poin:250},
+    {id:"7",code:"ST",name:"Straight",poin:150},
+    {id:"8",code:"3K",name:"3 Of A Kind",poin:100},
+    {id:"9",code:"2P",name:"2 Pair (10 PAIR)",poin:50},
+    {id:"10",code:"AP",name:"Ace Pair",poin:50},
   ]
   const card_result_dua = [
-    {id:"2_diamond",val:"2",img:"./CARD_RED_DIAMOND_2.png"},
-    {id:"3_diamond",val:"3",img:"./CARD_RED_DIAMOND_3.png"},
-    {id:"4_diamond",val:"4",img:"./CARD_RED_DIAMOND_4.png"},
-    {id:"5_diamond",val:"5",img:"./CARD_RED_DIAMOND_5.png"},
-    {id:"6_diamond",val:"6",img:"./CARD_RED_DIAMOND_6.png"},
-    {id:"7_diamond",val:"7",img:"./CARD_RED_DIAMOND_7.png"},
-    {id:"8_diamond",val:"8",img:"./CARD_RED_DIAMOND_8.png"},
-    {id:"9_diamond",val:"9",img:"./CARD_RED_DIAMOND_9.png"},
-    {id:"10_diamond",val:"10",img:"./CARD_RED_DIAMOND_10.png"},
-    {id:"j_diamond",val:"J",img:"./CARD_RED_DIAMOND_J.png"},
-    {id:"q_diamond",val:"Q",img:"./CARD_RED_DIAMOND_Q.png"},
-    {id:"k_diamond",val:"K",img:"./CARD_RED_DIAMOND_K.png"},
-    {id:"as_diamond",val:"AS",img:"./CARD_RED_DIAMOND_AS.png"},
-    {id:"jk_diamond",val:"JK",img:"./CARD_RED_DIAMOND_JK.png"},
-    {id:"2_heart",val:"2",img:"./CARD_RED_LOVE_2.png"},
-    {id:"3_heart",val:"3",img:"./CARD_RED_LOVE_3.png"},
-    {id:"4_heart",val:"4",img:"./CARD_RED_LOVE_4.png"},
-    {id:"5_heart",val:"5",img:"./CARD_RED_LOVE_5.png"},
-    {id:"6_heart",val:"6",img:"./CARD_RED_LOVE_6.png"},
-    {id:"7_heart",val:"7",img:"./CARD_RED_LOVE_7.png"},
-    {id:"8_heart",val:"8",img:"./CARD_RED_LOVE_8.png"},
-    {id:"9_heart",val:"9",img:"./CARD_RED_LOVE_9.png"},
-    {id:"10_heart",val:"10",img:"./CARD_RED_LOVE_10.png"},
-    {id:"j_heart",val:"J",img:"./CARD_RED_LOVE_J.png"},
-    {id:"q_heart",val:"Q",img:"./CARD_RED_LOVE_Q.png"},
-    {id:"k_heart",val:"K",img:"./CARD_RED_LOVE_K.png"},
-    {id:"as_heart",val:"AS",img:"./CARD_RED_LOVE_AS.png"},
-    {id:"jk_heart",val:"JK",img:"./CARD_RED_LOVE_JK.png"},
+    {id:"2_diamond",val:"2",img:"./CARD/WHITE/CARD_RED_DIAMOND_2.png"},
+    {id:"3_diamond",val:"3",img:"./CARD/WHITE/CARD_RED_DIAMOND_3.png"},
+    {id:"4_diamond",val:"4",img:"./CARD/WHITE/CARD_RED_DIAMOND_4.png"},
+    {id:"5_diamond",val:"5",img:"./CARD/WHITE/CARD_RED_DIAMOND_5.png"},
+    {id:"6_diamond",val:"6",img:"./CARD/WHITE/CARD_RED_DIAMOND_6.png"},
+    {id:"7_diamond",val:"7",img:"./CARD/WHITE/CARD_RED_DIAMOND_7.png"},
+    {id:"8_diamond",val:"8",img:"./CARD/WHITE/CARD_RED_DIAMOND_8.png"},
+    {id:"9_diamond",val:"9",img:"./CARD/WHITE/CARD_RED_DIAMOND_9.png"},
+    {id:"10_diamond",val:"10",img:"./CARD/WHITE/CARD_RED_DIAMOND_10.png"},
+    {id:"j_diamond",val:"J",img:"./CARD/WHITE/CARD_RED_DIAMOND_J.png"},
+    {id:"q_diamond",val:"Q",img:"./CARD/WHITE/CARD_RED_DIAMOND_Q.png"},
+    {id:"k_diamond",val:"K",img:"./CARD/WHITE/CARD_RED_DIAMOND_K.png"},
+    {id:"as_diamond",val:"AS",img:"./CARD/WHITE/CARD_RED_DIAMOND_AS.png"},
+    {id:"2_heart",val:"2",img:"./CARD/WHITE/CARD_RED_LOVE_2.png"},
+    {id:"3_heart",val:"3",img:"./CARD/WHITE/CARD_RED_LOVE_3.png"},
+    {id:"4_heart",val:"4",img:"./CARD/WHITE/CARD_RED_LOVE_4.png"},
+    {id:"5_heart",val:"5",img:"./CARD/WHITE/CARD_RED_LOVE_5.png"},
+    {id:"6_heart",val:"6",img:"./CARD/WHITE/CARD_RED_LOVE_6.png"},
+    {id:"7_heart",val:"7",img:"./CARD/WHITE/CARD_RED_LOVE_7.png"},
+    {id:"8_heart",val:"8",img:"./CARD/WHITE/CARD_RED_LOVE_8.png"},
+    {id:"9_heart",val:"9",img:"./CARD/WHITE/CARD_RED_LOVE_9.png"},
+    {id:"10_heart",val:"10",img:"./CARD/WHITE/CARD_RED_LOVE_10.png"},
+    {id:"j_heart",val:"J",img:"./CARD/WHITE/CARD_RED_LOVE_J.png"},
+    {id:"q_heart",val:"Q",img:"./CARD/WHITE/CARD_RED_LOVE_Q.png"},
+    {id:"k_heart",val:"K",img:"./CARD/WHITE/CARD_RED_LOVE_K.png"},
+    {id:"as_heart",val:"AS",img:"./CARD/WHITE/CARD_RED_LOVE_AS.png"},
 
-    {id:"2_club",val:"2",img:"./CARD_BLACK_KRITING_2.png"},
-    {id:"3_club",val:"3",img:"./CARD_BLACK_KRITING_3.png"},
-    {id:"4_club",val:"4",img:"./CARD_BLACK_KRITING_4.png"},
-    {id:"5_club",val:"5",img:"./CARD_BLACK_KRITING_5.png"},
-    {id:"6_club",val:"6",img:"./CARD_BLACK_KRITING_6.png"},
-    {id:"7_club",val:"7",img:"./CARD_BLACK_KRITING_7.png"},
-    {id:"8_club",val:"8",img:"./CARD_BLACK_KRITING_8.png"},
-    {id:"9_club",val:"9",img:"./CARD_BLACK_KRITING_9.png"},
-    {id:"10_club",val:"10",img:"./CARD_BLACK_KRITING_10.png"},
-    {id:"j_club",val:"J",img:"./CARD_BLACK_KRITING_J.png"},
-    {id:"q_club",val:"Q",img:"./CARD_BLACK_KRITING_Q.png"},
-    {id:"k_club",val:"K",img:"./CARD_BLACK_KRITING_K.png"},
-    {id:"as_club",val:"AS",img:"./CARD_BLACK_KRITING_AS.png"},
-    {id:"jk_club",val:"JK",img:"./CARD_BLACK_KRITING_JK.png"},
+    {id:"2_club",val:"2",img:"./CARD/WHITE/CARD_BLACK_KRITING_2.png"},
+    {id:"3_club",val:"3",img:"./CARD/WHITE/CARD_BLACK_KRITING_3.png"},
+    {id:"4_club",val:"4",img:"./CARD/WHITE/CARD_BLACK_KRITING_4.png"},
+    {id:"5_club",val:"5",img:"./CARD/WHITE/CARD_BLACK_KRITING_5.png"},
+    {id:"6_club",val:"6",img:"./CARD/WHITE/CARD_BLACK_KRITING_6.png"},
+    {id:"7_club",val:"7",img:"./CARD/WHITE/CARD_BLACK_KRITING_7.png"},
+    {id:"8_club",val:"8",img:"./CARD/WHITE/CARD_BLACK_KRITING_8.png"},
+    {id:"9_club",val:"9",img:"./CARD/WHITE/CARD_BLACK_KRITING_9.png"},
+    {id:"10_club",val:"10",img:"./CARD/WHITE/CARD_BLACK_KRITING_10.png"},
+    {id:"j_club",val:"J",img:"./CARD/WHITE/CARD_BLACK_KRITING_J.png"},
+    {id:"q_club",val:"Q",img:"./CARD/WHITE/CARD_BLACK_KRITING_Q.png"},
+    {id:"k_club",val:"K",img:"./CARD/WHITE/CARD_BLACK_KRITING_K.png"},
+    {id:"as_club",val:"AS",img:"./CARD/WHITE/CARD_BLACK_KRITING_AS.png"},
 
-    {id:"2_spade",val:"2",img:"./CARD_BLACK_DAUN_2.png"},
-    {id:"3_spade",val:"3",img:"./CARD_BLACK_DAUN_3.png"},
-    {id:"4_spade",val:"4",img:"./CARD_BLACK_DAUN_4.png"},
-    {id:"5_spade",val:"5",img:"./CARD_BLACK_DAUN_5.png"},
-    {id:"6_spade",val:"6",img:"./CARD_BLACK_DAUN_6.png"},
-    {id:"7_spade",val:"7",img:"./CARD_BLACK_DAUN_7.png"},
-    {id:"8_spade",val:"8",img:"./CARD_BLACK_DAUN_8.png"},
-    {id:"9_spade",val:"9",img:"./CARD_BLACK_DAUN_9.png"},
-    {id:"10_spade",val:"10",img:"./CARD_BLACK_DAUN_10.png"},
-    {id:"j_spade",val:"J",img:"./CARD_BLACK_DAUN_J.png"},
-    {id:"q_spade",val:"Q",img:"./CARD_BLACK_DAUN_Q.png"},
-    {id:"k_spade",val:"K",img:"./CARD_BLACK_DAUN_K.png"},
-    {id:"as_spade",val:"AS",img:"./CARD_BLACK_DAUN_AS.png"},
-    {id:"jk_spade",val:"JK",img:"./CARD_BLACK_DAUN_JK.png"},
+    {id:"2_spade",val:"2",img:"./CARD/WHITE/CARD_BLACK_DAUN_2.png"},
+    {id:"3_spade",val:"3",img:"./CARD/WHITE/CARD_BLACK_DAUN_3.png"},
+    {id:"4_spade",val:"4",img:"./CARD/WHITE/CARD_BLACK_DAUN_4.png"},
+    {id:"5_spade",val:"5",img:"./CARD/WHITE/CARD_BLACK_DAUN_5.png"},
+    {id:"6_spade",val:"6",img:"./CARD/WHITE/CARD_BLACK_DAUN_6.png"},
+    {id:"7_spade",val:"7",img:"./CARD/WHITE/CARD_BLACK_DAUN_7.png"},
+    {id:"8_spade",val:"8",img:"./CARD/WHITE/CARD_BLACK_DAUN_8.png"},
+    {id:"9_spade",val:"9",img:"./CARD/WHITE/CARD_BLACK_DAUN_9.png"},
+    {id:"10_spade",val:"10",img:"./CARD/WHITE/CARD_BLACK_DAUN_10.png"},
+    {id:"j_spade",val:"J",img:"./CARD/WHITE/CARD_BLACK_DAUN_J.png"},
+    {id:"q_spade",val:"Q",img:"./CARD/WHITE/CARD_BLACK_DAUN_Q.png"},
+    {id:"k_spade",val:"K",img:"./CARD/WHITE/CARD_BLACK_DAUN_K.png"},
+    {id:"as_spade",val:"AS",img:"./CARD/WHITE/CARD_BLACK_DAUN_AS.png"},
+    {id:"jk_black",val:"JK",img:"./CARD/WHITE/CARD_JOKER_BLACK.png"},
+    {id:"jk_red",val:"JK",img:"./CARD/WHITE/CARD_JOKER_RED.png"},
   ]
   let flag_bet = true
   let count_bet = 0;
@@ -87,13 +93,13 @@
   let card_result_4_id = "NULL"
   let card_result_5_id = "NULL"
   let card_result_6_id = "NULL"
-  let card_result_0_img = "./CARD_BLANK.png"
-  let card_result_1_img = "./CARD_BLANK.png"
-  let card_result_2_img = "./CARD_BLANK.png"
-  let card_result_3_img = "./CARD_BLANK.png"
-  let card_result_4_img = "./CARD_BLANK.png"
-  let card_result_5_img = "./CARD_BLANK.png"
-  let card_result_6_img = "./CARD_BLANK.png"
+  let card_result_0_img = ""
+  let card_result_1_img = ""
+  let card_result_2_img = ""
+  let card_result_3_img = ""
+  let card_result_4_img = ""
+  let card_result_5_img = ""
+  let card_result_6_img = ""
   let card_result_0_val = ""
   let card_result_1_val = ""
   let card_result_2_val = ""
@@ -105,6 +111,7 @@
   let card_result_array_val = []
   let info_result = "";
   let info_card = [];
+  let flag_win = false
   const call_play = () => {
     bet_0 = 0
     bet_1 = 0
@@ -112,17 +119,18 @@
     bet_3 = 0
     count_bet = 0;
     flag_bet = true;
+    flag_win = false;
     card_result_array_id = []
     card_result_array_val = []
     info_result = "";
     info_card = [];
-    card_result_0_img = "./CARD_BLANK.png"
-    card_result_1_img = "./CARD_BLANK.png"
-    card_result_2_img = "./CARD_BLANK.png"
-    card_result_3_img = "./CARD_BLANK.png"
-    card_result_4_img = "./CARD_BLANK.png"
-    card_result_5_img = "./CARD_BLANK.png"
-    card_result_6_img = "./CARD_BLANK.png"
+    card_result_0_img = ""
+    card_result_1_img = ""
+    card_result_2_img = ""
+    card_result_3_img = ""
+    card_result_4_img = ""
+    card_result_5_img = ""
+    card_result_6_img = ""
     card_result_0_val = ""
     card_result_1_val = ""
     card_result_2_val = ""
@@ -133,16 +141,24 @@
 	};
   const call_bet = () => {
       count_bet = count_bet + 1
+      sound = 0;
+      spin[sound].play();
       shuffleArray(card_result_dua)
 	};
   const call_deal = () => {
       count_bet = count_bet + 1
+      sound = 0;
+      spin[sound].play();
       shuffleArray_deal(card_result_dua)
 	};
   function hitung(arr_id,arr_val){
     let temp_result = [];
     temp_result = count_duplicate(arr_id,arr_val)
     console.log(temp_result)
+    if(flag_win){
+      sound = 0;
+      win[sound].play();
+    }
   }
   function count_duplicate(arr_id,arr_val){
     let counts = []
@@ -189,17 +205,20 @@
           console.log("TOTAL :"+total+" ACE PAIR")
           info_result = "ACE PAIR"
           info_card = temp
+          flag_win = true
         }
       }
       if(total == 3){
         console.log("TOTAL :"+total+" 3 OF KIND")
         info_result = "3 OF KIND"
         info_card = temp
+        flag_win = true
       }
       if(total == 4){
         console.log("TOTAL :"+total+" 4 OF KIND")
         info_result = "4 OF KIND"
         info_card = temp
+        flag_win = true
       }
     }
     let flag_two = false
@@ -226,12 +245,14 @@
           console.log("TOTAL :"+total+" 2 PAIR")
           info_result = "2 PAIR"
           info_card = temp
+          flag_win = true
         }
       }
       if(total == 3){
         console.log("TOTAL :"+total+" 3 OF KIND")
         info_result = "3 OF KIND"
         info_card = temp
+        flag_win = true
       }
     }
     
@@ -265,7 +286,7 @@
       card_result_0_id = shuffleArray[0].id
       card_result_2_id = shuffleArray[2].id
       card_result_0_img = shuffleArray[0].img
-      card_result_1_img = "./CARD_FLOP.png"
+      card_result_1_img = "./"+path_card+"CARD_FLOP.png"
       card_result_2_img = shuffleArray[2].img
       card_result_0_val = shuffleArray[0].val
       card_result_1_val = "NULL"
@@ -274,7 +295,7 @@
     if(count_bet == 2){
       bet_1 = min_bet
       card_result_4_id = shuffleArray[4].id
-      card_result_3_img = "./CARD_FLOP.png"
+      card_result_3_img = "./"+path_card+"CARD_FLOP.png"
       card_result_4_img = shuffleArray[4].img
       card_result_3_val = "NULL"
       card_result_4_val = shuffleArray[4].val
@@ -507,73 +528,96 @@
 
 <main class="container mx-auto lg:px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 xl:pb-5">
   <section class="grid grid-cols-3 w-full ">
-    <article class="select-none mt-5 w-full ">
+    <article class="select-none mt-2 w-full ">
       <div class="p-2">
-        <div class="text-lg">
-          <span class="text-lg font-bold">CREDIT</span> : <span class="text-lg text-blue-800">{new Intl.NumberFormat().format(credit)}</span>
+        <div class="text-xs lg:text-lg">
+          CREDIT : IDR <span class="link-accent">{new Intl.NumberFormat().format(credit)}</span>
         </div>
-        <div class="text-lg"><span class="text-lg text-blue-800">{bet_0}</span></div>
-        <div class="text-lg"><span class="text-lg text-blue-800">{bet_1}</span></div>
-        <div class="text-lg"><span class="text-lg text-blue-800">{bet_2}</span></div>
-        <div class="text-lg"><span class="text-lg text-blue-800">{bet_3}</span></div>
+        <div class="text-lg link-accent">{bet_0}</div>
+        <div class="text-lg link-accent">{bet_1}</div>
+        <div class="text-lg link-accent">{bet_2}</div>
+        <div class="text-lg link-accent">{bet_3}</div>
       </div>
     </article>
-    <article class="select-none mt-5 w-full ">
+    <article class="select-none mt-2 w-full ">
       <div class="flex flex-col items-center">
-        <div class="flex flex-col rounded-md bg-slate-300 w-2/3 mt-20">
-          <div class="text-sm h-16 mt-2">
-            <center>
-              <span class="text-2xl font-bold">WINNER</span>
-              <br>
-              <span class="text-lg text-orange-600 font-bold">{info_result}</span>
-            </center>
-          </div>
-          <div class="text-sm h-16">
-            <center>
-              <span class="text-2xl font-bold">CARD</span>
-              <br>
-              <span class="text-lg text-orange-600 font-bold">{info_card}</span>
-            </center>
+        <div class="card bg-base-100 shadow-lg  rounded-md select-none w-1/2">
+          <div class="card-body grass items-center text-center">
+            <div class="text-sm h-16 mt-2">
+              <center>
+                <span class="text-2xl font-bold">WINNER</span>
+                <br>
+                <span class="text-lg  font-bold link-accent">{info_result}</span>
+              </center>
+            </div>
+            <div class="text-sm h-16">
+              <center>
+                <span class="text-2xl font-bold">CARD</span>
+                <br>
+                <span class="text-lg  font-bold link-accent">{info_card}</span>
+              </center>
+            </div>
           </div>
         </div>
       </div>
       
       
     </article>
-    <article class="w-full bg-neutral-content select-none rounded-md p-2 mt-5">
+    <article class="w-full select-none rounded-md p-2 mt-2">
       <table class="w-full">
         {#each list_point as rec}
           <tr>
             <td>{rec.name}</td>
-            <td class="text-lg text-blue-800 text-right">{new Intl.NumberFormat().format(rec.poin)}</td>
+            <td class="text-[11px] lg:text-sm link-accent text-right">{new Intl.NumberFormat().format(rec.poin)}</td>
           </tr>
         {/each}
       </table>
     </article>
   </section>
-  <section class="grid grid-cols-7 w-full mt-2 mb-2 select-none">
-    <img width="170" src="{card_result_0_img}" alt="">
-    <img width="170" src="{card_result_1_img}" alt="">
-    <img width="170" src="{card_result_2_img}" alt="">
-    <img width="170" src="{card_result_3_img}" alt="">
-    <img width="170" src="{card_result_4_img}" alt="">
-    <img width="170" src="{card_result_5_img}" alt="">
-    <img width="170" src="{card_result_6_img}" alt="">
+  <section class="grid grid-cols-7 w-full mt-2 mb-2 select-none gap-2">
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_0_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_1_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_2_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_3_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_4_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_5_img}" alt="">
+    </div>
+    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+      <img width="170" src="{card_result_6_img}" alt="">
+    </div>
+    
+    
+    
+    
+    
+    
+    
   </section>
   
   <center class="mt-2 mb-2">
     {#if !flag_bet}
       <button on:click={() => {
           call_play();
-        }} class="btn btn-secondary">Play</button>
+        }} class="btn btn-success btn-lg">Play</button>
     {/if}
     {#if flag_bet}
       <button on:click={() => {
           call_bet();
-        }} class="btn btn-secondary" >BET</button>
+        }} class="btn btn-active btn-lg" >BET</button>
       <button on:click={() => {
           call_deal();
-        }} class="btn">DEAL</button>
+        }} class="btn btn-active btn-lg">DEAL</button>
     {/if}
   </center>
 </main>
