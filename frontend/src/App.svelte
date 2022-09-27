@@ -411,7 +411,6 @@
     card_result_4_img = shuffleArray[4].img
     card_result_5_img = shuffleArray[5].img
     card_result_6_img = shuffleArray[6].img
-    card_result_0_val = shuffleArray[7].val
     card_result_0_val = shuffleArray[0].val
     card_result_1_val = shuffleArray[1].val
     card_result_2_val = shuffleArray[2].val
