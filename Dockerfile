@@ -24,8 +24,7 @@ RUN yarn build
 # Moving the binary to the 'final Image' to make it smaller
 FROM alpine:latest as totosvelterelease
 WORKDIR /app
-RUN mkdir -p ./svelte/public
-COPY --from=totosveltebuilder /svelteapp/public ./svelte/public
+COPY --from=totosveltebuilder /svelteapp/dist ./frontend/dist
 COPY --from=totobuild /go/src/bitbucket.org/isbtotogroup/frontend_svelte/app .
 EXPOSE 3014
 CMD ["./app"]
