@@ -147,41 +147,49 @@
     card_result_6_val = ""
 	};
   const call_bet = () => {
-      count_bet = count_bet + 1
-      totalbet = totalbet + 1
-      sound = 0;
-      spin[sound].play();
-      switch(count_bet){
-        case 1:
-          flag_deal = true;
-          flag_fullbet = false;
-          bet_0 = min_bet;
-          credit = credit - bet_0;break;
-        case 2:
-          bet_1 = min_bet;
-          credit = credit - bet_1;break;
-        case 3:
-          bet_2 = min_bet;
-          credit = credit - bet_2;break;
-        case 4:
-          bet_3 = min_bet;
-          credit = credit - bet_3;break;
+      if(credit > 0){
+        count_bet = count_bet + 1
+        totalbet = totalbet + 1
+        sound = 0;
+        spin[sound].play();
+        switch(count_bet){
+          case 1:
+            flag_deal = true;
+            flag_fullbet = false;
+            bet_0 = min_bet;
+            credit = credit - bet_0;break;
+          case 2:
+            bet_1 = min_bet;
+            credit = credit - bet_1;break;
+          case 3:
+            bet_2 = min_bet;
+            credit = credit - bet_2;break;
+          case 4:
+            bet_3 = min_bet;
+            credit = credit - bet_3;break;
+        }
+        shuffleArray(card_result_dua)
+      }else{
+        alert("Credit Empty")
       }
-      shuffleArray(card_result_dua)
 	};
   const call_fullbet = () => {
-      count_bet = count_bet + 4
-      totalbet = totalbet + 4
-      bet_0 = min_bet;
-      bet_1 = min_bet;
-      bet_2 = min_bet;
-      bet_3 = min_bet;
-      
-      sound = 0;
-      spin[sound].play();
-      
-      credit = credit - bet_0 - bet_1 - bet_2 - bet_3;
-      shuffleArray_fullbet(card_result_dua)
+      if(credit > 0){
+        count_bet = count_bet + 4
+        totalbet = totalbet + 4
+        bet_0 = min_bet;
+        bet_1 = min_bet;
+        bet_2 = min_bet;
+        bet_3 = min_bet;
+        
+        sound = 0;
+        spin[sound].play();
+        
+        credit = credit - bet_0 - bet_1 - bet_2 - bet_3;
+        shuffleArray_fullbet(card_result_dua)
+      }else{
+        alert("Credit Empty")
+      }
 	};
   const call_deal = () => {
       count_bet = count_bet + 1
@@ -198,6 +206,7 @@
       win[sound].play();
     }
   }
+  
   function count_duplicate(arr_id,arr_val){
     let counts = []
     let obj = []
@@ -240,24 +249,35 @@
       if(total == 2){ //ACE PAIR
         temp_result = temp[0].split(":");
         if(temp_result[0] == "AS"){
-          console.log(list_point[9].poin)
           console.log("TOTAL :"+total+" ACE PAIR")
           info_result = "ACE PAIR"
           info_card = temp
           flag_win = true
+          console.log("CREDIT BEFORE : " + credit)
+          console.log("POINT : " + list_point[8].poin* totalbet)
+          credit = credit + (list_point[8].poin * totalbet)
+          console.log("CREDIT AFTER : " + credit)
         }
       }
-      if(total == 3){
+      if(total == 3){ //3 OF KIND
         console.log("TOTAL :"+total+" 3 OF KIND")
         info_result = "3 OF KIND"
         info_card = temp
         flag_win = true
+        console.log("CREDIT BEFORE : " + credit)
+        console.log("POINT : " + list_point[7].poin* totalbet)
+        credit = credit + (list_point[7].poin * totalbet)
+        console.log("CREDIT AFTER : " + credit)
       }
-      if(total == 4){
+      if(total == 4){ //4 OF KIND
         console.log("TOTAL :"+total+" 4 OF KIND")
         info_result = "4 OF KIND"
         info_card = temp
         flag_win = true
+        console.log("CREDIT BEFORE : " + credit)
+        console.log("POINT : " + list_point[3].poin* totalbet)
+        credit = credit + (list_point[3].poin * totalbet)
+        console.log("CREDIT AFTER : " + credit)
       }
     }
     let flag_two = false
@@ -280,27 +300,38 @@
               flag_two = true;break;
           }
         }
-        if(flag_two){
-          console.log(list_point[8].poin)
-          console.log("TOTAL :"+total+" 2 PAIR")
+        if(flag_two){//2 PAIR
           info_result = "2 PAIR"
           info_card = temp
           flag_win = true
+          console.log("CREDIT BEFORE : " + credit)
+          console.log("POINT : " + list_point[8].poin* totalbet)
+          credit = credit + (list_point[8].poin * totalbet)
+          console.log("CREDIT AFTER : " + credit)
         }
       }
-      if(total == 3){
+      if(total == 3){//3 OF KIND
         console.log("TOTAL :"+total+" 3 OF KIND")
         info_result = "3 OF KIND"
         info_card = temp
         flag_win = true
+        console.log("CREDIT BEFORE : " + credit)
+        console.log("POINT : " + list_point[7].poin* totalbet)
+        credit = credit + (list_point[7].poin * totalbet)
+        console.log("CREDIT AFTER : " + credit)
       }
     }
     
     
-    if(total == 5){
+    if(total == 5){//FULL HOUSE
       console.log("TOTAL :"+total+" FULL HOUSE")
       info_result = "FULL HOUSE"
       info_card = temp
+      flag_win = true
+      console.log("CREDIT BEFORE : " + credit)
+      console.log("POINT : " + list_point[4].poin* totalbet)
+      credit = credit + (list_point[4].poin * totalbet)
+      console.log("CREDIT AFTER : " + credit)
     }
     return temp
     
@@ -372,8 +403,8 @@
       card_result_array_val.push(card_result_4_val)
       card_result_array_val.push(card_result_5_val)
       card_result_array_val.push(card_result_6_val)
-      console.log(card_result_array_val)
-      console.log(card_result_array_id)
+      // console.log(card_result_array_val)
+      // console.log(card_result_array_id)
       hitung(card_result_array_id,card_result_array_val);
     }
   
@@ -434,8 +465,8 @@
     card_result_array_val.push(card_result_4_val)
     card_result_array_val.push(card_result_5_val)
     card_result_array_val.push(card_result_6_val)
-    console.log(card_result_array_val)
-    console.log(card_result_array_id)
+    // console.log(card_result_array_val)
+    // console.log(card_result_array_id)
     hitung(card_result_array_id,card_result_array_val);
   
     return shuffleArray;
