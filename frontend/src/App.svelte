@@ -2,6 +2,7 @@
 
   let credit = 5000
   let min_bet = 50
+  let totalbet = 0
   let bet_0 = 0
   let bet_1 = 0
   let bet_2 = 0
@@ -85,7 +86,10 @@
     {id:"jk_red",val:"JK",img:"./CARD/WHITE/CARD_JOKER_RED.png"},
   ]
   let flag_bet = true
+  let flag_fullbet = true
+  let flag_deal = false
   let count_bet = 0;
+  let card_background = "bg-base-100"
   let card_result_0_id = "NULL"
   let card_result_1_id = "NULL"
   let card_result_2_id = "NULL"
@@ -118,7 +122,10 @@
     bet_2 = 0
     bet_3 = 0
     count_bet = 0;
+    totalbet = 0;
     flag_bet = true;
+    flag_fullbet = true;
+    flag_deal = false;
     flag_win = false;
     card_result_array_id = []
     card_result_array_val = []
@@ -141,9 +148,40 @@
 	};
   const call_bet = () => {
       count_bet = count_bet + 1
+      totalbet = totalbet + 1
       sound = 0;
       spin[sound].play();
+      switch(count_bet){
+        case 1:
+          flag_deal = true;
+          flag_fullbet = false;
+          bet_0 = min_bet;
+          credit = credit - bet_0;break;
+        case 2:
+          bet_1 = min_bet;
+          credit = credit - bet_1;break;
+        case 3:
+          bet_2 = min_bet;
+          credit = credit - bet_2;break;
+        case 4:
+          bet_3 = min_bet;
+          credit = credit - bet_3;break;
+      }
       shuffleArray(card_result_dua)
+	};
+  const call_fullbet = () => {
+      count_bet = count_bet + 4
+      totalbet = totalbet + 4
+      bet_0 = min_bet;
+      bet_1 = min_bet;
+      bet_2 = min_bet;
+      bet_3 = min_bet;
+      
+      sound = 0;
+      spin[sound].play();
+      
+      credit = credit - bet_0 - bet_1 - bet_2 - bet_3;
+      shuffleArray_fullbet(card_result_dua)
 	};
   const call_deal = () => {
       count_bet = count_bet + 1
@@ -202,6 +240,7 @@
       if(total == 2){ //ACE PAIR
         temp_result = temp[0].split(":");
         if(temp_result[0] == "AS"){
+          console.log(list_point[9].poin)
           console.log("TOTAL :"+total+" ACE PAIR")
           info_result = "ACE PAIR"
           info_card = temp
@@ -242,6 +281,7 @@
           }
         }
         if(flag_two){
+          console.log(list_point[8].poin)
           console.log("TOTAL :"+total+" 2 PAIR")
           info_result = "2 PAIR"
           info_card = temp
@@ -269,7 +309,7 @@
     let shuffleArray = [];
     let usedIndexes = [];
     let i = 0
-
+    
     if(count_bet == 4){
       flag_bet = false
     }
@@ -282,7 +322,6 @@
       }
     }
     if(count_bet == 1){
-      bet_0 = min_bet
       card_result_0_id = shuffleArray[0].id
       card_result_2_id = shuffleArray[2].id
       card_result_0_img = shuffleArray[0].img
@@ -293,7 +332,7 @@
       card_result_2_val = shuffleArray[2].val
     }
     if(count_bet == 2){
-      bet_1 = min_bet
+      
       card_result_4_id = shuffleArray[4].id
       card_result_3_img = "./"+path_card+"CARD_FLOP.png"
       card_result_4_img = shuffleArray[4].img
@@ -302,13 +341,12 @@
      
     }
     if(count_bet == 3){
-      bet_2 = min_bet
+      
       card_result_5_id = shuffleArray[5].id
       card_result_5_img = shuffleArray[5].img
       card_result_5_val = shuffleArray[5].val
     }
     if(count_bet == 4){
-      bet_3 = min_bet
       card_result_1_id = shuffleArray[1].id
       card_result_3_id = shuffleArray[3].id
       card_result_6_id = shuffleArray[6].id
@@ -338,6 +376,68 @@
       console.log(card_result_array_id)
       hitung(card_result_array_id,card_result_array_val);
     }
+  
+    return shuffleArray;
+  }
+  function shuffleArray_fullbet(array){
+    let shuffleArray = [];
+    let usedIndexes = [];
+    let i = 0
+
+    if(count_bet == 4){
+      flag_bet = false
+      
+    }
+    
+    while(i<7){
+      let randomNumber = Math.floor(Math.random() * array.length)
+      if(!usedIndexes.includes(randomNumber)){
+        shuffleArray.push(array[randomNumber]);
+        usedIndexes.push(randomNumber);
+        i++;
+      }
+    }
+    card_result_0_id = shuffleArray[0].id
+    card_result_1_id = shuffleArray[1].id
+    card_result_2_id = shuffleArray[2].id
+    card_result_3_id = shuffleArray[3].id
+    card_result_4_id = shuffleArray[4].id
+    card_result_5_id = shuffleArray[5].id
+    card_result_6_id = shuffleArray[6].id
+    card_result_0_img = shuffleArray[0].img
+    card_result_1_img = shuffleArray[1].img
+    card_result_2_img = shuffleArray[2].img
+    card_result_3_img = shuffleArray[3].img
+    card_result_4_img = shuffleArray[4].img
+    card_result_5_img = shuffleArray[5].img
+    card_result_6_img = shuffleArray[6].img
+    card_result_0_val = shuffleArray[7].val
+    card_result_0_val = shuffleArray[0].val
+    card_result_1_val = shuffleArray[1].val
+    card_result_2_val = shuffleArray[2].val
+    card_result_3_val = shuffleArray[3].val
+    card_result_4_val = shuffleArray[4].val
+    card_result_5_val = shuffleArray[5].val
+    card_result_6_val = shuffleArray[6].val
+
+    card_result_array_id.push(card_result_0_id)
+    card_result_array_id.push(card_result_1_id)
+    card_result_array_id.push(card_result_2_id)
+    card_result_array_id.push(card_result_3_id)
+    card_result_array_id.push(card_result_4_id)
+    card_result_array_id.push(card_result_5_id)
+    card_result_array_id.push(card_result_6_id)
+
+    card_result_array_val.push(card_result_0_val)
+    card_result_array_val.push(card_result_1_val)
+    card_result_array_val.push(card_result_2_val)
+    card_result_array_val.push(card_result_3_val)
+    card_result_array_val.push(card_result_4_val)
+    card_result_array_val.push(card_result_5_val)
+    card_result_array_val.push(card_result_6_val)
+    console.log(card_result_array_val)
+    console.log(card_result_array_id)
+    hitung(card_result_array_id,card_result_array_val);
   
     return shuffleArray;
   }
@@ -372,10 +472,6 @@
     }
     console.log(shuffleArray)
     if(count_bet == 1){
-      bet_0 = min_bet
-      bet_1 = min_bet
-      bet_2 = min_bet
-      bet_3 = min_bet
       card_result_0_id = shuffleArray[0].id
       card_result_1_id = shuffleArray[1].id
       card_result_2_id = shuffleArray[2].id
@@ -418,9 +514,6 @@
       hitung(card_result_array_id,card_result_array_val);
     }
     if(count_bet == 2){
-      bet_1 = min_bet
-      bet_2 = min_bet
-      bet_3 = min_bet
       card_result_1_id = shuffleArray[0].id
       card_result_3_id = shuffleArray[1].id
       card_result_4_id = shuffleArray[2].id
@@ -457,8 +550,6 @@
       hitung(card_result_array_id,card_result_array_val);
     }
     if(count_bet == 3){
-      bet_2 = min_bet
-      bet_3 = min_bet
       card_result_1_id = shuffleArray[0].id
       card_result_3_id = shuffleArray[1].id
       card_result_5_id = shuffleArray[2].id
@@ -492,7 +583,6 @@
       hitung(card_result_array_id,card_result_array_val);
     }
     if(count_bet == 4){
-      bet_3 = min_bet
       card_result_1_id = shuffleArray[0].id
       card_result_3_id = shuffleArray[1].id
       card_result_6_id = shuffleArray[2].id
@@ -568,32 +658,32 @@
         {#each list_point as rec}
           <tr>
             <td>{rec.name}</td>
-            <td class="text-[11px] lg:text-sm link-accent text-right">{new Intl.NumberFormat().format(rec.poin)}</td>
+            <td class="text-xs lg:text-lg link-accent text-right">{new Intl.NumberFormat().format(rec.poin*totalbet)}</td>
           </tr>
         {/each}
       </table>
     </article>
   </section>
   <section class="grid grid-cols-7 w-full mt-2 mb-2 select-none gap-2">
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_0_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_1_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_2_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_3_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_4_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_5_img}" alt="">
     </div>
-    <div class="card bg-base-100 shadow-lg  rounded-md select-none h-[220px]">
+    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
       <img width="170" src="{card_result_6_img}" alt="">
     </div>
     
@@ -615,9 +705,16 @@
       <button on:click={() => {
           call_bet();
         }} class="btn btn-active btn-lg" >BET</button>
+      {#if flag_fullbet}
+      <button on:click={() => {
+          call_fullbet();
+        }} class="btn btn-active btn-lg" >FULL BET</button>
+      {/if}
+      {#if flag_deal}
       <button on:click={() => {
           call_deal();
         }} class="btn btn-active btn-lg">DEAL</button>
+      {/if}
     {/if}
   </center>
 </main>
