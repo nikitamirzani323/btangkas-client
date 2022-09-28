@@ -249,23 +249,26 @@
     let flag_threeofkind = false
     let flag_twopair = false
     
-    flag_fiveofkind = five_kind(arr_id)
-    if(!flag_fiveofkind){
-      flag_straight_flush = straight_flush(arr_id)
-      if(!flag_straight_flush){
-        flag_fourofkind = fourofkind(arr_id,arr_val)
-        if(!flag_fourofkind){
-          flag_fullhouse = fullhouse(arr_id,arr_val)
-          if(!flag_fullhouse){
-            flag_flush = flush(arr_id,arr_val)
-            if(!flag_flush){
-              flag_straight = straight(arr_id)
-              if(!flag_straight){
-                flag_threeofkind = threeofkind(arr_id,arr_val)
-                if(!flag_threeofkind){
-                  flag_twopair = twopair(arr_id,arr_val)
-                  if(!flag_twopair){
-                    acepair(arr_id,arr_val)
+    flag_royalflush = royal_flush(arr_id)
+    if(!flag_royalflush){
+      flag_fiveofkind = five_kind(arr_id)
+      if(!flag_fiveofkind){
+        flag_straight_flush = straight_flush(arr_id)
+        if(!flag_straight_flush){
+          flag_fourofkind = fourofkind(arr_id,arr_val)
+          if(!flag_fourofkind){
+            flag_fullhouse = fullhouse(arr_id,arr_val)
+            if(!flag_fullhouse){
+              flag_flush = flush(arr_id,arr_val)
+              if(!flag_flush){
+                flag_straight = straight(arr_id)
+                if(!flag_straight){
+                  flag_threeofkind = threeofkind(arr_id,arr_val)
+                  if(!flag_threeofkind){
+                    flag_twopair = twopair(arr_id,arr_val)
+                    if(!flag_twopair){
+                      acepair(arr_id,arr_val)
+                    }
                   }
                 }
               }
@@ -279,7 +282,68 @@
       win[sound].play();
     }
   }
-  function royal_flush(){}
+  function royal_flush(arr_id){
+    let flag_func = false
+    let obj = []
+    let objdata_master = []
+    for(let i in arr_id){
+      let temp_data = card_result_data.find(card => card.id == arr_id[i])
+      obj["id"] = temp_data.id 
+      obj["val"] = temp_data.val 
+      obj["code_card"] = temp_data.code_card 
+      obj["val_display"] = temp_data.val_display 
+      objdata_master.push(obj)
+      obj = []
+    }
+    let counts = []
+    for(let i=0;i<objdata_master.length;i++){
+      if(counts[objdata_master[i].code_card]){
+        counts[objdata_master[i].code_card] += 1
+      }else{
+        counts[objdata_master[i].code_card] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 4){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    if(temp.length > 0){
+      let temp_string = temp[0]
+      let temp_result = temp_string.split(":");
+      let total_temp = temp_result[1];
+      let total_jk = 0;
+      let total_card = 0;
+      if(parseInt(total_temp) == 5){
+        for(let i=0;i<objdata_master.length;i++){
+          switch(objdata_master[i].val){
+            case "10":
+              total_jk = total_jk + 1;break;
+            case "J":
+              total_jk = total_jk + 1;break;
+            case "K":
+              total_jk = total_jk + 1;break;
+            case "Q":
+              total_jk = total_jk + 1;break;
+            case "AS":
+              total_jk = total_jk + 1;break;
+            case "JK":
+              total_jk = total_jk + 1;break;
+          }
+        }
+        total_card = total_jk
+        if(total_card == 5){
+          info_result = "Royal Flush"
+          info_card = pattern_stright_10
+          flag_win = true
+          credit_animation(credit,0,totalbet)
+          flag_func = true;
+        }
+      }
+    }
+    return flag_func
+  }
   function five_kind(arr_id){
     let flag_func = false
     let obj = []
@@ -791,12 +855,12 @@
       }
     }
     
+    // shuffleArray.push(array[8]);
+    // shuffleArray.push(array[9]);
     // shuffleArray.push(array[10]);
-    // shuffleArray.push(array[23]);
-    // shuffleArray.push(array[36]);
-    // shuffleArray.push(array[2]);
-    // shuffleArray.push(array[20]);
-    // shuffleArray.push(array[52]);
+    // shuffleArray.push(array[11]);
+    // shuffleArray.push(array[12]);
+    // shuffleArray.push(array[30]);
     // shuffleArray.push(array[53]);
     console.log(shuffleArray)
   }
