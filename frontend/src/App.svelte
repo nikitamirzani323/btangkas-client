@@ -14,6 +14,7 @@
   ];
   let win = [
     new Audio("/sounds/win.mp3"),
+    new Audio("/sounds/win.mp3"),
   ];
   let list_point = [
     {id:"1",code:"RF",name:"Royal Flush",poin:25000},
@@ -241,18 +242,42 @@
     // let temp_result = [];
     // temp_result = count_duplicate(arr_id,arr_val)
     // console.log(temp_result)
+    let flag_fourofkind = false
+    let flag_fullhouse = false
+    let flag_flush = false
     let flag_straight = false
-    flag_straight = stright(arr_id)
-    if(!flag_straight){
-      count_duplicate(arr_id,arr_val)
+    let flag_threeofkind = false
+    let flag_twopair = false
+    
+    flag_fourofkind = fourofkind(arr_id,arr_val)
+    if(!flag_fourofkind){
+      flag_fullhouse = fullhouse(arr_id,arr_val)
+      if(!flag_fullhouse){
+        flag_flush = flush(arr_id,arr_val)
+        if(!flag_flush){
+          flag_straight = straight(arr_id)
+          if(!flag_straight){
+            flag_threeofkind = threeofkind(arr_id,arr_val)
+            if(!flag_threeofkind){
+              flag_twopair = twopair(arr_id,arr_val)
+              if(!flag_twopair){
+                acepair(arr_id,arr_val)
+              }
+            }
+          }
+        }
+      }
     }
+    
     if(flag_win){
       sound = 0;
       win[sound].play();
     }
   }
+  function royal_flush(){}
+  function five_kind(){}
   
-  function stright(arr_id){
+  function straight_flush(arr_id){
     let flag_func = false
     let obj = []
     let objdata_master = []
@@ -276,10 +301,8 @@
     flag[7] = checkArray(pattern_stright_8,objdata_master)
     flag[8] = checkArray(pattern_stright_9,objdata_master)
     flag[9] = checkArray(pattern_stright_10,objdata_master)
-    // flag[20] = checkArray(pattern_stright_10,[14,2,3,4,5,6,7])
     for(let i=0;i<flag.length;i++){
       if(flag[i] == true){
-        // console.log("TOTAL :"+total+" 3 OF KIND")
         info_result = "STRAIGHT"
         info_card = pattern_stright_10
         flag_win = true
@@ -290,10 +313,317 @@
     }
     return flag_func;
   }
-  function checkArray(arr_1,arr_2){
-    return arr_1.every((val) => arr_2.includes(val))
+  function fourofkind(arr_id,arr_val){
+    let flag =false
+    let counts = []
+    let obj = []
+    let data_result_id = []
+    let data_result = []
+    for(let i=0;i<arr_val.length;i++){
+      if(counts[arr_val[i]]){
+        counts[arr_val[i]] += 1
+      }else{
+        counts[arr_val[i]] = 1
+      }
+    }
+    console.log(counts)
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 4){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    let total = 0;
+    let total_temp = temp.length
+    let temp_string = ""
+    let temp_result;
+    for(let i=0;i<total_temp;i++){
+        temp_string = temp[i]
+        temp_result = temp_string.split(":");
+        obj["val"] = temp_result[0]
+        obj["count"] = temp_result[1]
+        for(let x=0;x<arr_val.length;x++){
+          if(temp_result[0] == arr_val[x]){
+            data_result_id.push(arr_id[x])
+          }
+        }
+        obj["id"] = data_result_id
+        data_result.push(obj)
+        obj = []
+        data_result_id = []
+        total = total + parseInt(temp_result[1])
+    }
+    if(total == 4){//FOUR OF KIND
+      console.log("TOTAL :"+total+" FOUR OF KIND")
+      info_result = "FOUR OF KIND"
+      info_card = temp
+      flag_win = true
+      flag = true
+      credit_animation(credit,3,totalbet)
+    }
+    return flag
   }
-  function count_duplicate(arr_id,arr_val){
+  function fullhouse(arr_id,arr_val){
+    let flag =false
+    let counts = []
+    let obj = []
+    let data_result_id = []
+    let data_result = []
+    for(let i=0;i<arr_val.length;i++){
+      if(counts[arr_val[i]]){
+        counts[arr_val[i]] += 1
+      }else{
+        counts[arr_val[i]] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 2){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    let total = 0;
+    let total_temp = temp.length
+    let temp_string = ""
+    let temp_result;
+    for(let i=0;i<total_temp;i++){
+        temp_string = temp[i]
+        temp_result = temp_string.split(":");
+        obj["val"] = temp_result[0]
+        obj["count"] = temp_result[1]
+        for(let x=0;x<arr_val.length;x++){
+          if(temp_result[0] == arr_val[x]){
+            data_result_id.push(arr_id[x])
+          }
+        }
+        obj["id"] = data_result_id
+        data_result.push(obj)
+        obj = []
+        data_result_id = []
+        total = total + parseInt(temp_result[1])
+    }
+    if(total == 5){//FULL HOUSE
+      console.log("TOTAL :"+total+" FULL HOUSE")
+      info_result = "FULL HOUSE"
+      info_card = temp
+      flag_win = true
+      flag = true
+      credit_animation(credit,4,totalbet)
+    }
+    return flag
+  }
+  function flush(arr_id,arr_val){
+    let flag =false
+    let counts = []
+    let obj = []
+    let data_result_id = []
+    let data_result = []
+    for(let i=0;i<arr_val.length;i++){
+      let temp_data = card_result_data.find(card => card.id == arr_id[i])
+      if(counts[temp_data.code_card]){
+        counts[temp_data.code_card] += 1
+      }else{
+        counts[temp_data.code_card] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 5){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    console.log(temp)
+    let total = 0;
+    let total_temp = temp.length
+    let temp_string = ""
+    let temp_result;
+    for(let i=0;i<total_temp;i++){
+        temp_string = temp[i]
+        temp_result = temp_string.split(":");
+        obj["val"] = temp_result[0]
+        obj["count"] = temp_result[1]
+        for(let x=0;x<arr_val.length;x++){
+          if(temp_result[0] == arr_val[x]){
+            data_result_id.push(arr_id[x])
+          }
+        }
+        obj["id"] = data_result_id
+        data_result.push(obj)
+        obj = []
+        data_result_id = []
+        total = total + parseInt(temp_result[1])
+    }
+    if(total_temp == 1){
+      if(total == 5){ //FLUSH
+        console.log("TOTAL :"+total+" FLUSH")
+        info_result = "FLUSH"
+        info_card = temp
+        flag_win = true
+        flag = false
+        credit_animation(credit,5,totalbet)
+      }
+    }
+    return flag
+  }
+  function straight(arr_id){
+    let flag_func = false
+    let obj = []
+    let objdata_master = []
+    for(let i in arr_id){
+      let temp_data = card_result_data.find(card => card.id == arr_id[i])
+      obj["id"] = temp_data.id 
+      obj["val_display"] = temp_data.val_display 
+      objdata_master.push(temp_data.val_display)
+      obj = []
+    }
+    
+    let flag = []
+    
+    flag[0] = checkArray(pattern_stright_1,objdata_master)
+    flag[1] = checkArray(pattern_stright_2,objdata_master)
+    flag[2] = checkArray(pattern_stright_3,objdata_master)
+    flag[3] = checkArray(pattern_stright_4,objdata_master)
+    flag[4] = checkArray(pattern_stright_5,objdata_master)
+    flag[5] = checkArray(pattern_stright_6,objdata_master)
+    flag[6] = checkArray(pattern_stright_7,objdata_master)
+    flag[7] = checkArray(pattern_stright_8,objdata_master)
+    flag[8] = checkArray(pattern_stright_9,objdata_master)
+    flag[9] = checkArray(pattern_stright_10,objdata_master)
+    for(let i=0;i<flag.length;i++){
+      if(flag[i] == true){
+        info_result = "STRAIGHT"
+        info_card = pattern_stright_10
+        flag_win = true
+        credit_animation(credit,6,totalbet)
+        flag_func = true;
+        break;
+      }
+    }
+    return flag_func;
+  }
+  function threeofkind(arr_id,arr_val){
+    let flag =false
+    let counts = []
+    let obj = []
+    let data_result_id = []
+    let data_result = []
+    for(let i=0;i<arr_val.length;i++){
+      if(counts[arr_val[i]]){
+        counts[arr_val[i]] += 1
+      }else{
+        counts[arr_val[i]] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 2){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    let total = 0;
+    let total_temp = temp.length
+    let temp_string = ""
+    let temp_result;
+    for(let i=0;i<total_temp;i++){
+        temp_string = temp[i]
+        temp_result = temp_string.split(":");
+        obj["val"] = temp_result[0]
+        obj["count"] = temp_result[1]
+        for(let x=0;x<arr_val.length;x++){
+          if(temp_result[0] == arr_val[x]){
+            data_result_id.push(arr_id[x])
+          }
+        }
+        obj["id"] = data_result_id
+        data_result.push(obj)
+        obj = []
+        data_result_id = []
+        total = total + parseInt(temp_result[1])
+    }
+    if(total_temp == 2){
+      if(total == 3){//3 OF KIND
+        console.log("TOTAL :"+total+" 3 OF KIND")
+        info_result = "3 OF KIND"
+        info_card = temp
+        flag_win = true
+        flag = true
+        credit_animation(credit,7,totalbet)
+      }
+    }
+    return flag
+  }
+  function twopair(arr_id,arr_val){
+    let flag =false
+    let counts = []
+    let obj = []
+    let data_result_id = []
+    let data_result = []
+    for(let i=0;i<arr_val.length;i++){
+      if(counts[arr_val[i]]){
+        counts[arr_val[i]] += 1
+      }else{
+        counts[arr_val[i]] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 2){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    let total = 0;
+    let total_temp = temp.length
+    let temp_string = ""
+    let temp_result;
+    for(let i=0;i<total_temp;i++){
+        temp_string = temp[i]
+        temp_result = temp_string.split(":");
+        obj["val"] = temp_result[0]
+        obj["count"] = temp_result[1]
+        for(let x=0;x<arr_val.length;x++){
+          if(temp_result[0] == arr_val[x]){
+            data_result_id.push(arr_id[x])
+          }
+        }
+        obj["id"] = data_result_id
+        data_result.push(obj)
+        obj = []
+        data_result_id = []
+        total = total + parseInt(temp_result[1])
+    }
+    let flag_two = false
+    if(total_temp == 2){
+      if(total == 4 || total == 6){
+        for(let x=0;x<temp.length;x++){
+          temp_result = temp[x].split(":");
+          switch(temp_result[0]){
+            case "10":
+              flag_two = true;break;
+            case "J":
+              flag_two = true;break;
+            case "Q":
+              flag_two = true;break;
+            case "K":
+              flag_two = true;break;
+            case "AS":
+              flag_two = true;break;
+            case "JK":
+              flag_two = true;break;
+          }
+        }
+        if(flag_two){//2 PAIR
+          info_result = "2 PAIR"
+          info_card = temp
+          flag_win = true
+          flag = true
+          credit_animation(credit,8,totalbet)
+        }
+      }
+    }
+    return flag
+  }
+  function acepair(arr_id,arr_val){
+    let flag =false
     let counts = []
     let obj = []
     let data_result_id = []
@@ -339,71 +669,17 @@
           info_result = "ACE PAIR"
           info_card = temp
           flag_win = true
+          flag = false
           credit_animation(credit,8,totalbet)
         }
       }
-      if(total == 3){ //3 OF KIND
-        console.log("TOTAL :"+total+" 3 OF KIND")
-        info_result = "3 OF KIND"
-        info_card = temp
-        flag_win = true
-        credit_animation(credit,7,totalbet)
-      }
-      if(total == 4){ //4 OF KIND
-        console.log("TOTAL :"+total+" 4 OF KIND")
-        info_result = "4 OF KIND"
-        info_card = temp
-        flag_win = true
-        credit_animation(credit,3,totalbet)
-      }
     }
-    let flag_two = false
-    if(total_temp == 2){
-      if(total == 4 || total == 6){
-        for(let x=0;x<temp.length;x++){
-          temp_result = temp[x].split(":");
-          switch(temp_result[0]){
-            case "10":
-              flag_two = true;break;
-            case "J":
-              flag_two = true;break;
-            case "Q":
-              flag_two = true;break;
-            case "K":
-              flag_two = true;break;
-            case "AS":
-              flag_two = true;break;
-            case "JK":
-              flag_two = true;break;
-          }
-        }
-        if(flag_two){//2 PAIR
-          info_result = "2 PAIR"
-          info_card = temp
-          flag_win = true
-          credit_animation(credit,8,totalbet)
-        }
-      }
-      if(total == 3){//3 OF KIND
-        console.log("TOTAL :"+total+" 3 OF KIND")
-        info_result = "3 OF KIND"
-        info_card = temp
-        flag_win = true
-        credit_animation(credit,7,totalbet)
-      }
-    }
-    
-    
-    if(total == 5){//FULL HOUSE
-      console.log("TOTAL :"+total+" FULL HOUSE")
-      info_result = "FULL HOUSE"
-      info_card = temp
-      flag_win = true
-      credit_animation(credit,4,totalbet)
-    }
-    return temp
-    
+    return flag
   }
+  function checkArray(arr_1,arr_2){
+    return arr_1.every((val) => arr_2.includes(val))
+  }
+  
   function shuffleArray_card(array){
     let i = 0
     while(i<7){
@@ -414,6 +690,16 @@
         i++;
       }
     }
+    // shuffleArray = [8,21,34,47,51,2,27]
+    // shuffleArray = [8,21,34,47,51,2,27]
+    // console.log("TAI")
+    // shuffleArray.push(array[8]);
+    // shuffleArray.push(array[21]);
+    // shuffleArray.push(array[34]);
+    // shuffleArray.push(array[47]);
+    // shuffleArray.push(array[51]);
+    // shuffleArray.push(array[2]);
+    // shuffleArray.push(array[27]);
     console.log(shuffleArray)
   }
   function shuffleArray_bet(){
