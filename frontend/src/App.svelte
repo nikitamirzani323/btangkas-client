@@ -880,23 +880,23 @@
   }
   
   function shuffleArray_card(array){
-    // let i = 0
-    // while(i<7){
-    //   let randomNumber = Math.floor(Math.random() * array.length)
-    //   if(!usedIndexes.includes(randomNumber)){
-    //     shuffleArray.push(array[randomNumber]);
-    //     usedIndexes.push(randomNumber);
-    //     i++;
-    //   }
-    // }
+    let i = 0
+    while(i<7){
+      let randomNumber = Math.floor(Math.random() * array.length)
+      if(!usedIndexes.includes(randomNumber)){
+        shuffleArray.push(array[randomNumber]);
+        usedIndexes.push(randomNumber);
+        i++;
+      }
+    }
     
-    shuffleArray.push(array[12]);
-    shuffleArray.push(array[2]);
-    shuffleArray.push(array[26]);
-    shuffleArray.push(array[49]);
-    shuffleArray.push(array[20]);
-    shuffleArray.push(array[30]);
-    shuffleArray.push(array[52]);
+    // shuffleArray.push(array[12]);
+    // shuffleArray.push(array[2]);
+    // shuffleArray.push(array[26]);
+    // shuffleArray.push(array[49]);
+    // shuffleArray.push(array[20]);
+    // shuffleArray.push(array[30]);
+    // shuffleArray.push(array[52]);
     console.log(shuffleArray)
   }
   function shuffleArray_bet(){
