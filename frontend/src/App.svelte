@@ -242,6 +242,7 @@
     // let temp_result = [];
     // temp_result = count_duplicate(arr_id,arr_val)
     // console.log(temp_result)
+    let flag_straight_flush = false
     let flag_fourofkind = false
     let flag_fullhouse = false
     let flag_flush = false
@@ -249,25 +250,29 @@
     let flag_threeofkind = false
     let flag_twopair = false
     
-    flag_fourofkind = fourofkind(arr_id,arr_val)
-    if(!flag_fourofkind){
-      flag_fullhouse = fullhouse(arr_id,arr_val)
-      if(!flag_fullhouse){
-        flag_flush = flush(arr_id,arr_val)
-        if(!flag_flush){
-          flag_straight = straight(arr_id)
-          if(!flag_straight){
-            flag_threeofkind = threeofkind(arr_id,arr_val)
-            if(!flag_threeofkind){
-              flag_twopair = twopair(arr_id,arr_val)
-              if(!flag_twopair){
-                acepair(arr_id,arr_val)
+    flag_straight_flush = straight_flush(arr_id)
+    if(!flag_straight_flush){
+      flag_fourofkind = fourofkind(arr_id,arr_val)
+      if(!flag_fourofkind){
+        flag_fullhouse = fullhouse(arr_id,arr_val)
+        if(!flag_fullhouse){
+          flag_flush = flush(arr_id,arr_val)
+          if(!flag_flush){
+            flag_straight = straight(arr_id)
+            if(!flag_straight){
+              flag_threeofkind = threeofkind(arr_id,arr_val)
+              if(!flag_threeofkind){
+                flag_twopair = twopair(arr_id,arr_val)
+                if(!flag_twopair){
+                  acepair(arr_id,arr_val)
+                }
               }
             }
           }
         }
       }
     }
+    
     
     if(flag_win){
       sound = 0;
@@ -281,34 +286,59 @@
     let flag_func = false
     let obj = []
     let objdata_master = []
+    let objdata_master2 = []
     for(let i in arr_id){
       let temp_data = card_result_data.find(card => card.id == arr_id[i])
       obj["id"] = temp_data.id 
+      obj["code_card"] = temp_data.code_card 
       obj["val_display"] = temp_data.val_display 
-      objdata_master.push(temp_data.val_display)
+      objdata_master.push(obj)
       obj = []
     }
-    
-    let flag = []
-    
-    flag[0] = checkArray(pattern_stright_1,objdata_master)
-    flag[1] = checkArray(pattern_stright_2,objdata_master)
-    flag[2] = checkArray(pattern_stright_3,objdata_master)
-    flag[3] = checkArray(pattern_stright_4,objdata_master)
-    flag[4] = checkArray(pattern_stright_5,objdata_master)
-    flag[5] = checkArray(pattern_stright_6,objdata_master)
-    flag[6] = checkArray(pattern_stright_7,objdata_master)
-    flag[7] = checkArray(pattern_stright_8,objdata_master)
-    flag[8] = checkArray(pattern_stright_9,objdata_master)
-    flag[9] = checkArray(pattern_stright_10,objdata_master)
-    for(let i=0;i<flag.length;i++){
-      if(flag[i] == true){
-        info_result = "STRAIGHT"
-        info_card = pattern_stright_10
-        flag_win = true
-        credit_animation(credit,6,totalbet)
-        flag_func = true;
-        break;
+    for(let i in arr_id){
+      let temp_data = card_result_data.find(card => card.id == arr_id[i])
+      obj["id"] = temp_data.id 
+      obj["code_card"] = temp_data.code_card 
+      obj["val_display"] = temp_data.val_display 
+      objdata_master2.push(temp_data.val_display)
+      obj = []
+    }
+    let counts = []
+    for(let i=0;i<objdata_master.length;i++){
+      if(counts[objdata_master[i].code_card]){
+        counts[objdata_master[i].code_card] += 1
+      }else{
+        counts[objdata_master[i].code_card] = 1
+      }
+    }
+    console.log(counts)
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 5){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    if(temp.length > 0){
+      let flag = []
+      flag[0] = checkArray(pattern_stright_1,objdata_master2)
+      flag[1] = checkArray(pattern_stright_2,objdata_master2)
+      flag[2] = checkArray(pattern_stright_3,objdata_master2)
+      flag[3] = checkArray(pattern_stright_4,objdata_master2)
+      flag[4] = checkArray(pattern_stright_5,objdata_master2)
+      flag[5] = checkArray(pattern_stright_6,objdata_master2)
+      flag[6] = checkArray(pattern_stright_7,objdata_master2)
+      flag[7] = checkArray(pattern_stright_8,objdata_master2)
+      flag[8] = checkArray(pattern_stright_9,objdata_master2)
+      flag[9] = checkArray(pattern_stright_10,objdata_master2)
+      for(let i=0;i<flag.length;i++){
+        if(flag[i] == true){
+          info_result = "STRAIGHT FLUSH"
+          info_card = pattern_stright_10
+          flag_win = true
+          credit_animation(credit,2,totalbet)
+          flag_func = true;
+          break;
+        }
       }
     }
     return flag_func;
@@ -326,7 +356,6 @@
         counts[arr_val[i]] = 1
       }
     }
-    console.log(counts)
     let temp = [];
     for(let prop in counts){
       if (counts[prop] >= 4){
@@ -693,13 +722,13 @@
     // shuffleArray = [8,21,34,47,51,2,27]
     // shuffleArray = [8,21,34,47,51,2,27]
     // console.log("TAI")
-    // shuffleArray.push(array[8]);
-    // shuffleArray.push(array[21]);
-    // shuffleArray.push(array[34]);
-    // shuffleArray.push(array[47]);
-    // shuffleArray.push(array[51]);
+    // shuffleArray.push(array[0]);
+    // shuffleArray.push(array[1]);
     // shuffleArray.push(array[2]);
-    // shuffleArray.push(array[27]);
+    // shuffleArray.push(array[3]);
+    // shuffleArray.push(array[4]);
+    // shuffleArray.push(array[30]);
+    // shuffleArray.push(array[50]);
     console.log(shuffleArray)
   }
   function shuffleArray_bet(){
