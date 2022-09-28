@@ -239,9 +239,8 @@
       shuffleArray_deal()
 	};
   function hitung(arr_id,arr_val){
-    // let temp_result = [];
-    // temp_result = count_duplicate(arr_id,arr_val)
-    // console.log(temp_result)
+    let flag_royalflush = false
+    let flag_fiveofkind = false
     let flag_straight_flush = false
     let flag_fourofkind = false
     let flag_fullhouse = false
@@ -250,22 +249,24 @@
     let flag_threeofkind = false
     let flag_twopair = false
     
-    // straight_flush(arr_id)
-    flag_straight_flush = straight_flush(arr_id)
-    if(!flag_straight_flush){
-      flag_fourofkind = fourofkind(arr_id,arr_val)
-      if(!flag_fourofkind){
-        flag_fullhouse = fullhouse(arr_id,arr_val)
-        if(!flag_fullhouse){
-          flag_flush = flush(arr_id,arr_val)
-          if(!flag_flush){
-            flag_straight = straight(arr_id)
-            if(!flag_straight){
-              flag_threeofkind = threeofkind(arr_id,arr_val)
-              if(!flag_threeofkind){
-                flag_twopair = twopair(arr_id,arr_val)
-                if(!flag_twopair){
-                  acepair(arr_id,arr_val)
+    flag_fiveofkind = five_kind(arr_id)
+    if(!flag_fiveofkind){
+      flag_straight_flush = straight_flush(arr_id)
+      if(!flag_straight_flush){
+        flag_fourofkind = fourofkind(arr_id,arr_val)
+        if(!flag_fourofkind){
+          flag_fullhouse = fullhouse(arr_id,arr_val)
+          if(!flag_fullhouse){
+            flag_flush = flush(arr_id,arr_val)
+            if(!flag_flush){
+              flag_straight = straight(arr_id)
+              if(!flag_straight){
+                flag_threeofkind = threeofkind(arr_id,arr_val)
+                if(!flag_threeofkind){
+                  flag_twopair = twopair(arr_id,arr_val)
+                  if(!flag_twopair){
+                    acepair(arr_id,arr_val)
+                  }
                 }
               }
             }
@@ -273,16 +274,77 @@
         }
       }
     }
-    
-    
     if(flag_win){
       sound = 0;
       win[sound].play();
     }
   }
   function royal_flush(){}
-  function five_kind(){}
-  
+  function five_kind(arr_id){
+    let flag_func = false
+    let obj = []
+    let objdata_master = []
+    for(let i in arr_id){
+      let temp_data = card_result_data.find(card => card.id == arr_id[i])
+      obj["id"] = temp_data.id 
+      obj["code_card"] = temp_data.code_card 
+      obj["val_display"] = temp_data.val_display 
+      objdata_master.push(obj)
+      obj = []
+    }
+    let counts = []
+    for(let i=0;i<objdata_master.length;i++){
+      if(counts[objdata_master[i].val_display]){
+        counts[objdata_master[i].val_display] += 1
+      }else{
+        counts[objdata_master[i].val_display] = 1
+      }
+    }
+    let temp = [];
+    for(let prop in counts){
+      if (counts[prop] >= 3){
+            temp.push(prop + ":" + counts[prop])
+        }
+    }
+    if(temp.length > 0){
+      let temp_string = temp[0]
+      let temp_result = temp_string.split(":");
+      let total_temp = temp_result[1];
+      let total_jk = 0;
+      let total_card = 0;
+      if(parseInt(total_temp) == 4){
+        for(let i=0;i<objdata_master.length;i++){
+          if(objdata_master[i].code_card == "JK"){
+            total_jk = total_jk + 1;
+          }
+        }
+        total_card = parseInt(total_temp) + total_jk
+        if(total_card == 5){
+          info_result = "5 Of A Kind"
+          info_card = pattern_stright_10
+          flag_win = true
+          credit_animation(credit,1,totalbet)
+          flag_func = true;
+        }
+      }
+      if(parseInt(total_temp) == 3){
+        for(let i=0;i<objdata_master.length;i++){
+          if(objdata_master[i].code_card == "JK"){
+            total_jk = total_jk + 1;
+          }
+        }
+        total_card = parseInt(total_temp) + total_jk
+        if(total_card == 5){
+          info_result = "5 Of A Kind"
+          info_card = pattern_stright_10
+          flag_win = true
+          credit_animation(credit,1,totalbet)
+          flag_func = true;
+        }
+      }
+    }
+    return flag_func
+  }
   function straight_flush(arr_id){
     let flag_func = false
     let obj = []
@@ -728,16 +790,14 @@
         i++;
       }
     }
-    // shuffleArray = [8,21,34,47,51,2,27]
-    // shuffleArray = [8,21,34,47,51,2,27]
-    // console.log("TAI")
-    // shuffleArray.push(array[0]);
-    // shuffleArray.push(array[1]);
+    
+    // shuffleArray.push(array[10]);
+    // shuffleArray.push(array[23]);
+    // shuffleArray.push(array[36]);
     // shuffleArray.push(array[2]);
-    // shuffleArray.push(array[3]);
-    // shuffleArray.push(array[4]);
-    // shuffleArray.push(array[30]);
-    // shuffleArray.push(array[50]);
+    // shuffleArray.push(array[20]);
+    // shuffleArray.push(array[52]);
+    // shuffleArray.push(array[53]);
     console.log(shuffleArray)
   }
   function shuffleArray_bet(){
