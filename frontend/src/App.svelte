@@ -212,14 +212,14 @@
       }
 	};
   const call_fullbet = () => {
-      if(credit > 0){
+      let credit_after = min_bet * 4;
+      if(credit >= credit_after){
         count_bet = count_bet + 4
         totalbet = totalbet + 4
         bet_0 = min_bet;
         bet_1 = min_bet;
         bet_2 = min_bet;
         bet_3 = min_bet;
-        
         sound = 0;
         spin[sound].play();
         
