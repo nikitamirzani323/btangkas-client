@@ -250,6 +250,7 @@
     let flag_threeofkind = false
     let flag_twopair = false
     
+    // straight_flush(arr_id)
     flag_straight_flush = straight_flush(arr_id)
     if(!flag_straight_flush){
       flag_fourofkind = fourofkind(arr_id,arr_val)
@@ -286,7 +287,6 @@
     let flag_func = false
     let obj = []
     let objdata_master = []
-    let objdata_master2 = []
     for(let i in arr_id){
       let temp_data = card_result_data.find(card => card.id == arr_id[i])
       obj["id"] = temp_data.id 
@@ -295,14 +295,7 @@
       objdata_master.push(obj)
       obj = []
     }
-    for(let i in arr_id){
-      let temp_data = card_result_data.find(card => card.id == arr_id[i])
-      obj["id"] = temp_data.id 
-      obj["code_card"] = temp_data.code_card 
-      obj["val_display"] = temp_data.val_display 
-      objdata_master2.push(temp_data.val_display)
-      obj = []
-    }
+    
     let counts = []
     for(let i=0;i<objdata_master.length;i++){
       if(counts[objdata_master[i].code_card]){
@@ -311,7 +304,6 @@
         counts[objdata_master[i].code_card] = 1
       }
     }
-    console.log(counts)
     let temp = [];
     for(let prop in counts){
       if (counts[prop] >= 5){
@@ -319,17 +311,34 @@
         }
     }
     if(temp.length > 0){
+      let obj_final = []
+      let objdata_final = []
+      let temp_string = ""
+      let temp_result;
+      for(let i=0;i<arr_id.length;i++){
+          let temp_data = card_result_data.find(card => card.id == arr_id[i])
+          temp_string = temp[0]
+          temp_result = temp_string.split(":");
+          if(temp_result[0] == temp_data.code_card){
+            obj_final["id"] = temp_data.id 
+            obj_final["code_card"] = temp_data.code_card 
+            obj_final["val_display"] = temp_data.val_display 
+            objdata_final.push(temp_data.val_display)
+            obj_final = []
+          }
+      }
+     
       let flag = []
-      flag[0] = checkArray(pattern_stright_1,objdata_master2)
-      flag[1] = checkArray(pattern_stright_2,objdata_master2)
-      flag[2] = checkArray(pattern_stright_3,objdata_master2)
-      flag[3] = checkArray(pattern_stright_4,objdata_master2)
-      flag[4] = checkArray(pattern_stright_5,objdata_master2)
-      flag[5] = checkArray(pattern_stright_6,objdata_master2)
-      flag[6] = checkArray(pattern_stright_7,objdata_master2)
-      flag[7] = checkArray(pattern_stright_8,objdata_master2)
-      flag[8] = checkArray(pattern_stright_9,objdata_master2)
-      flag[9] = checkArray(pattern_stright_10,objdata_master2)
+      flag[0] = checkArray(pattern_stright_1,objdata_final)
+      flag[1] = checkArray(pattern_stright_2,objdata_final)
+      flag[2] = checkArray(pattern_stright_3,objdata_final)
+      flag[3] = checkArray(pattern_stright_4,objdata_final)
+      flag[4] = checkArray(pattern_stright_5,objdata_final)
+      flag[5] = checkArray(pattern_stright_6,objdata_final)
+      flag[6] = checkArray(pattern_stright_7,objdata_final)
+      flag[7] = checkArray(pattern_stright_8,objdata_final)
+      flag[8] = checkArray(pattern_stright_9,objdata_final)
+      flag[9] = checkArray(pattern_stright_10,objdata_final)
       for(let i=0;i<flag.length;i++){
         if(flag[i] == true){
           info_result = "STRAIGHT FLUSH"
