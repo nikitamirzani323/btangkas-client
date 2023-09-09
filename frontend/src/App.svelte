@@ -1127,69 +1127,55 @@
         <div class="text-xs lg:text-lg bg-base-100 rounded-md p-2">
           CREDIT : IDR <span class="link-accent" style="--value:15;">{new Intl.NumberFormat().format(credit)}</span>
           <span class="{point_style_result}">{point_result}</span>
+          <br>
+          <div class="text-sm">
+            BET {totalbet}x : <span class="link-accent">{new Intl.NumberFormat().format(bet_0*totalbet)}</span>
+          </div>
         </div>
       </div>
     </article>
   </section>
-  <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  grid  grid-cols-2 ">
-    <div class="w-1/2 ">
-        <div class="grid grid-cols-2 ">
-          <div class="text-left text-xs whitespace-nowrap">BET 1</div>
-          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_0)}</div>
-        </div>
-        <div class="grid grid-cols-2 ">
-          <div class="text-left text-xs whitespace-nowrap">BET 2</div>
-          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_1)}</div>
-        </div>
-        <div class="grid grid-cols-2 ">
-          <div class="text-left text-xs whitespace-nowrap">BET 3</div>
-          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_2)}</div>
-        </div>
-        <div class="grid grid-cols-2 ">
-          <div class="text-left text-xs whitespace-nowrap">BET 4</div>
-          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_3)}</div>
-        </div>
-    </div>
+  <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  ">
     <div class="grid grid-cols-2 w-full ">
       <div class="flex w-full pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[0]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[0]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[5]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[5]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[5]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[1]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[1]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[1]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[6]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[6]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[6]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[2]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[2]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[2]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[7]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[7]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[7]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[3]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[3]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[3]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[8]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[8]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[8]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full pr-5 {list_point[4]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[4]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[4]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
       <div class="flex w-full  pr-5 {list_point[9]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-xs whitespace-nowrap">{list_point[9]["name"]}</div>
-        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*min_bet)}</div>
+        <div class="w-full text-sm whitespace-nowrap">{list_point[9]["name"]}</div>
+        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
     </div>
     
