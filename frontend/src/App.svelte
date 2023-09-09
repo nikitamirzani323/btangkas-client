@@ -1,7 +1,7 @@
 <script>
 
   let credit = 5000
-  let min_bet = 50
+  let min_bet = 100
   let totalbet = 0
   let bet_0 = 0
   let bet_1 = 0
@@ -17,16 +17,16 @@
     new Audio("/sounds/win.mp3"),
   ];
   let list_point = [
-    {id:"1",code:"RF",name:"Royal Flush",poin:25000},
-    {id:"2",code:"5K",name:"5 Of A Kind",poin:10000},
-    {id:"3",code:"SF",name:"Straight Flush",poin:6000},
-    {id:"4",code:"4K",name:"4 Of A Kind",poin:2500},
-    {id:"5",code:"FH",name:"Full House",poin:350},
-    {id:"6",code:"FL",name:"Flush",poin:250},
-    {id:"7",code:"ST",name:"Straight",poin:150},
-    {id:"8",code:"3K",name:"3 Of A Kind",poin:100},
-    {id:"9",code:"2P",name:"2 Pair (10 PAIR)",poin:50},
-    {id:"10",code:"AP",name:"Ace Pair",poin:50},
+    {id:"1",code:"RF",name:"Royal Flush",poin:50000},
+    {id:"2",code:"5K",name:"5 Of A Kind",poin:20000},
+    {id:"3",code:"SF",name:"Straight Flush",poin:12000},
+    {id:"4",code:"4K",name:"4 Of A Kind",poin:1200},
+    {id:"5",code:"FH",name:"Full House",poin:700},
+    {id:"6",code:"FL",name:"Flush",poin:500},
+    {id:"7",code:"ST",name:"Straight",poin:300},
+    {id:"8",code:"3K",name:"3 Of A Kind",poin:200},
+    {id:"9",code:"2P",name:"2 Pair (10 PAIR)",poin:100},
+    {id:"10",code:"AP",name:"Ace Pair",poin:100},
   ]
   const card_result_data = [
     {id:"2_diamond",val:"2",val_display:2,code_card:"D",img:"./CARD/WHITE/CARD_RED_DIAMOND_2.png"},
@@ -113,13 +113,13 @@
   let card_result_4_id = "NULL"
   let card_result_5_id = "NULL"
   let card_result_6_id = "NULL"
-  let card_result_0_img = ""
-  let card_result_1_img = ""
-  let card_result_2_img = ""
-  let card_result_3_img = ""
-  let card_result_4_img = ""
-  let card_result_5_img = ""
-  let card_result_6_img = ""
+  let card_result_0_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_1_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_2_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_3_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_4_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_5_img = "./"+path_card+"CARD_FLOP.png"
+  let card_result_6_img = "./"+path_card+"CARD_FLOP.png"
   let card_result_0_val = ""
   let card_result_1_val = ""
   let card_result_2_val = ""
@@ -155,13 +155,13 @@
     list_point_id = ""
     point_result = "";
     point_style_result = "";
-    card_result_0_img = ""
-    card_result_1_img = ""
-    card_result_2_img = ""
-    card_result_3_img = ""
-    card_result_4_img = ""
-    card_result_5_img = ""
-    card_result_6_img = ""
+    card_result_0_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_1_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_2_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_3_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_4_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_5_img = "./"+path_card+"CARD_FLOP.png"
+    card_result_6_img = "./"+path_card+"CARD_FLOP.png"
     card_result_0_val = ""
     card_result_1_val = ""
     card_result_2_val = ""
