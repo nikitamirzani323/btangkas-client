@@ -1,13 +1,14 @@
 <script>
 
-  let credit = 5000
-  let min_bet = 100
+  let credit = 10000
+  let min_bet = 0
   let totalbet = 0
   let bet_0 = 0
   let bet_1 = 0
   let bet_2 = 0
   let bet_3 = 0
   let sound = 0;
+  let flag_minimalbet = false;
   let path_card = "CARD/WHITE/";
   let spin = [
     new Audio("/sounds/spin.mp3"),
@@ -135,6 +136,7 @@
   let shuffleArray = [];
   let usedIndexes = [];
   const call_play = () => {
+    flag_minimalbet = false;
     bet_0 = 0
     bet_1 = 0
     bet_2 = 0
@@ -171,47 +173,60 @@
     card_result_6_val = ""
 	};
   const call_bet = () => {
+    flag_minimalbet = true;
+    if(parseInt(min_bet) > 0){
       if(credit > 0){
-        count_bet = count_bet + 1
-        totalbet = totalbet + 1
-        sound = 0;
-        spin[sound].play();
-        switch(count_bet){
-          case 1:
-            shuffleArray_card(card_result_data)
-            flag_deal = true;
-            flag_fullbet = false;
-            bet_0 = min_bet;
-            credit = credit - bet_0;
-            point_style_result = "text-red-600 font-bold"
-            point_result = "-" + (totalbet * min_bet)
-            break;
-          case 2:
-            bet_1 = min_bet;
-            credit = credit - bet_1;
-            point_style_result = "text-red-600 font-bold"
-            point_result = "-" + (totalbet * min_bet)
-            break;
-          case 3:
-            bet_2 = min_bet;
-            credit = credit - bet_2;
-            point_style_result = "text-red-600 font-bold"
-            point_result = "-" + (totalbet * min_bet)
-            break;
-          case 4:
-            bet_3 = min_bet;
-            credit = credit - bet_3;
-            point_style_result = "text-red-600 font-bold"
-            point_result = "-" + (totalbet * min_bet)
-            break;
+        if(parseInt(credit) > parseInt(min_bet)){
+          count_bet = count_bet + 1
+          totalbet = totalbet + 1
+          sound = 0;
+          spin[sound].play();
+          switch(count_bet){
+            case 1:
+              shuffleArray_card(card_result_data)
+              flag_deal = true;
+              flag_fullbet = false;
+              bet_0 = min_bet;
+              credit = credit - bet_0;
+              point_style_result = "text-red-600 font-bold"
+              point_result = "-" + (totalbet * min_bet)
+              break;
+            case 2:
+              bet_1 = min_bet;
+              credit = credit - bet_1;
+              point_style_result = "text-red-600 font-bold"
+              point_result = "-" + (totalbet * min_bet)
+              break;
+            case 3:
+              bet_2 = min_bet;
+              credit = credit - bet_2;
+              point_style_result = "text-red-600 font-bold"
+              point_result = "-" + (totalbet * min_bet)
+              break;
+            case 4:
+              bet_3 = min_bet;
+              credit = credit - bet_3;
+              point_style_result = "text-red-600 font-bold"
+              point_result = "-" + (totalbet * min_bet)
+              break;
+          }
+          
+          shuffleArray_bet()
+        }else{
+          alert("not enough Credit")
         }
         
-        shuffleArray_bet()
       }else{
         alert("Credit Empty")
       }
+    }else{
+      alert("Please choose minimal bet")
+      flag_minimalbet = false;
+    }
 	};
   const call_fullbet = () => {
+    flag_minimalbet = true;
+    if(parseInt(min_bet) > 0){
       let credit_after = min_bet * 4;
       if(credit >= credit_after){
         count_bet = count_bet + 4
@@ -230,7 +245,12 @@
         shuffleArray_fullbet()
       }else{
         alert("Credit Empty")
+        flag_minimalbet = false;
       }
+    }else{
+      alert("Please choose minimal bet")
+      flag_minimalbet = false;
+    }
 	};
   const call_deal = () => {
       count_bet = 4
@@ -1112,11 +1132,23 @@
     </article>
   </section>
   <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  grid grid-cols-2 ">
-    <div>
-        <div class="text-lg link-accent">{bet_0}</div>
-        <div class="text-lg link-accent">{bet_1}</div>
-        <div class="text-lg link-accent">{bet_2}</div>
-        <div class="text-lg link-accent">{bet_3}</div>
+    <div class="w-1/2">
+        <div class="grid grid-cols-2 ">
+          <div class="text-left">BET 1</div>
+          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_0)}</div>
+        </div>
+        <div class="grid grid-cols-2 ">
+          <div class="text-left">BET 2</div>
+          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_1)}</div>
+        </div>
+        <div class="grid grid-cols-2 ">
+          <div class="text-left">BET 3</div>
+          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_2)}</div>
+        </div>
+        <div class="grid grid-cols-2 ">
+          <div class="text-left">BET 4</div>
+          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_3)}</div>
+        </div>
     </div>
     <div class="grid grid-cols-2">
       <div class="flex w-full pr-20 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
@@ -1162,54 +1194,63 @@
     </div>
     
   </section>
-  <section class="grid grid-cols-7 w-full mt-2 mb-2 select-none gap-2">
-    <div class="card {card_background} bg-transparent shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_0_img}" alt="">
+  
+  
+  <section class="w-full flex justify-center mt-5 ">
+    <img class="" src="{card_result_0_img}" alt="">
+    <img class="" src="{card_result_1_img}" alt="">
+    <img class="" src="{card_result_2_img}" alt="">
+    <img class="" src="{card_result_3_img}" alt="">
+    <img class="" src="{card_result_4_img}" alt="">
+    <img class="" src="{card_result_5_img}" alt="">
+    <img class="" src="{card_result_6_img}" alt="">
+  </section>
+ 
+  <section class="flex w-full mt-5 gap-2">
+    <div class="flex flex-col  w-full">
+      <span class="self-end text-lg">Minimal Bet</span>
+      <select
+        disabled={flag_minimalbet}
+        bind:value={min_bet} 
+        class="select select-bordered max-w-xs text-lg self-end">
+        <option value=100>100</option>
+        <option value=200>200</option>
+        <option value=300>300</option>
+        <option value=400>400</option>
+        <option value=500>500</option>
+        <option value=600>600</option>
+        <option value=700>700</option>
+        <option value=800>800</option>
+        <option value=900>900</option>
+        <option value=1000>1000</option>
+      </select>
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_1_img}" alt="">
-    </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_2_img}" alt="">
-    </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_3_img}" alt="">
-    </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_4_img}" alt="">
-    </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_5_img}" alt="">
-    </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none ">
-      <img  src="{card_result_6_img}" alt="">
+    <div class="flex place-self-end gap-1 w-full">
+      {#if flag_all}
+        {#if !flag_bet}
+          <button on:click={() => {
+              call_play();
+            }} class="btn btn-success btn-md ">Play</button>
+        {/if}
+        {#if flag_bet}
+          <button on:click={() => {
+              call_bet();
+            }} class="btn btn-primary btn-md " >BET</button>
+          {#if flag_fullbet}
+          <button on:click={() => {
+              call_fullbet();
+            }} class="btn btn-primary btn-md " >FULL BET</button>
+          {/if}
+          {#if flag_deal}
+          <button on:click={() => {
+              call_deal();
+            }} class="btn btn-primary btn-md ">DEAL</button>
+          {/if}
+        {/if}
+      {/if}
     </div>
   </section>
-  
-  <center class="mt-2 mb-2">
-    {#if flag_all}
-      {#if !flag_bet}
-        <button on:click={() => {
-            call_play();
-          }} class="btn btn-success btn-lg">Play</button>
-      {/if}
-      {#if flag_bet}
-        <button on:click={() => {
-            call_bet();
-          }} class="btn btn-active btn-lg" >BET</button>
-        {#if flag_fullbet}
-        <button on:click={() => {
-            call_fullbet();
-          }} class="btn btn-active btn-lg" >FULL BET</button>
-        {/if}
-        {#if flag_deal}
-        <button on:click={() => {
-            call_deal();
-          }} class="btn btn-active btn-lg">DEAL</button>
-        {/if}
-      {/if}
-    {/if}
-  </center>
+ 
 </main>
 
 <style global lang="postcss">
