@@ -1253,6 +1253,11 @@
  
 </main>
 
+<div class="hidden">
+{#each card_result_data as rec}
+  <img src="{rec.img}" alt="" srcset="">
+{/each}
+</div>
 <style global lang="postcss">
   @tailwind base;
   @tailwind components;
