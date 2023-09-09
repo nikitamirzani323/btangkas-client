@@ -105,7 +105,7 @@
   let point_style_result = "";
   let list_point_id = "";
   let list_point_style = "";
-  let card_background = "bg-base-100"
+  let card_background = "bg-transparent"
   let card_result_0_id = "NULL"
   let card_result_1_id = "NULL"
   let card_result_2_id = "NULL"
@@ -1141,7 +1141,7 @@
       
       
     </article>
-    <article class="w-full select-none rounded-md p-2 mt-2 bg-base-100 rounded-md">
+    <article class="w-full select-none rounded-md p-2 mt-2 bg-base-100 ">
       <table class="w-full">
         {#each list_point as rec}
           {#if rec.id == list_point_id}
@@ -1160,34 +1160,27 @@
     </article>
   </section>
   <section class="grid grid-cols-7 w-full mt-2 mb-2 select-none gap-2">
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_0_img}" alt="">
+    <div class="card {card_background} bg-transparent shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_0_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_1_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_1_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_2_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_2_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_3_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_3_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_4_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_4_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_5_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_5_img}" alt="">
     </div>
-    <div class="card {card_background} shadow-lg  rounded-md select-none h-[220px]">
-      <img width="170" src="{card_result_6_img}" alt="">
+    <div class="card {card_background} shadow-lg  rounded-md select-none ">
+      <img  src="{card_result_6_img}" alt="">
     </div>
-    
-    
-    
-    
-    
-    
-    
   </section>
   
   <center class="mt-2 mb-2">
