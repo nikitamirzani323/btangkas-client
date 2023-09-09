@@ -1131,65 +1131,65 @@
       </div>
     </article>
   </section>
-  <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  grid grid-cols-2 ">
-    <div class="w-1/2">
+  <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  grid  grid-cols-2 ">
+    <div class="w-1/2 ">
         <div class="grid grid-cols-2 ">
-          <div class="text-left">BET 1</div>
-          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_0)}</div>
+          <div class="text-left text-xs whitespace-nowrap">BET 1</div>
+          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_0)}</div>
         </div>
         <div class="grid grid-cols-2 ">
-          <div class="text-left">BET 2</div>
-          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_1)}</div>
+          <div class="text-left text-xs whitespace-nowrap">BET 2</div>
+          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_1)}</div>
         </div>
         <div class="grid grid-cols-2 ">
-          <div class="text-left">BET 3</div>
-          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_2)}</div>
+          <div class="text-left text-xs whitespace-nowrap">BET 3</div>
+          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_2)}</div>
         </div>
         <div class="grid grid-cols-2 ">
-          <div class="text-left">BET 4</div>
-          <div class="text-right text-lg link-accent">{new Intl.NumberFormat().format(bet_3)}</div>
+          <div class="text-left text-xs whitespace-nowrap">BET 4</div>
+          <div class="text-right text-xs whitespace-nowrap link-accent">{new Intl.NumberFormat().format(bet_3)}</div>
         </div>
     </div>
-    <div class="grid grid-cols-2">
-      <div class="flex w-full pr-20 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[0]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*min_bet)}</div>
+    <div class="grid grid-cols-2 w-full ">
+      <div class="flex w-full pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[0]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pl-10 pr-10 {list_point[5]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[5]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[5]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[5]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pr-20 {list_point[1]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[1]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[1]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[1]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pl-10 pr-10 {list_point[6]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[6]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[6]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[6]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pr-20 {list_point[2]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[2]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[2]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[2]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pl-10 pr-10 {list_point[7]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[7]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[7]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[7]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pr-20 {list_point[3]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[3]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[3]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[3]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pl-10 pr-10 {list_point[8]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[8]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[8]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[8]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pr-20 {list_point[4]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[4]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full pr-5 {list_point[4]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[4]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*min_bet)}</div>
       </div>
-      <div class="flex w-full pl-10 pr-10 {list_point[9]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full">{list_point[9]["name"]}</div>
-        <div class="w-full text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*min_bet)}</div>
+      <div class="flex w-full  pr-5 {list_point[9]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs whitespace-nowrap">{list_point[9]["name"]}</div>
+        <div class="w-full text-xs whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*min_bet)}</div>
       </div>
     </div>
     
@@ -1197,13 +1197,27 @@
   
   
   <section class="w-full flex justify-center mt-5 ">
-    <img class="" src="{card_result_0_img}" alt="">
-    <img class="" src="{card_result_1_img}" alt="">
-    <img class="" src="{card_result_2_img}" alt="">
-    <img class="" src="{card_result_3_img}" alt="">
-    <img class="" src="{card_result_4_img}" alt="">
-    <img class="" src="{card_result_5_img}" alt="">
-    <img class="" src="{card_result_6_img}" alt="">
+    <div class="relative">
+      <img src="{card_result_0_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_1_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_2_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_3_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_4_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_5_img}" alt="">
+    </div>
+    <div class="relative">
+      <img src="{card_result_6_img}" alt="">
+    </div>
   </section>
  
   <section class="flex w-full mt-5 gap-2">
@@ -1262,4 +1276,33 @@
   @tailwind base;
   @tailwind components;
   @tailwind utilities;
+  
+  .container {
+    width: 100%;
+  }
+  @media (min-width: 640px) {
+      .container {
+          max-width: 640px;
+      }
+  }
+  @media (min-width: 768px) {
+      .container {
+          max-width: 768px;
+      }
+  }
+  @media (min-width: 1024px) {
+      .container {
+          max-width: 1024px;
+      }
+  }
+  @media (min-width: 1280px) {
+      .container {
+          max-width: 1280px;
+      }
+  }
+  @media (min-width: 1536px) {
+      .container {
+          max-width: 768px;
+      }
+  }
 </style>
