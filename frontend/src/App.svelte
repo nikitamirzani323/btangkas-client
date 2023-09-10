@@ -1,12 +1,10 @@
 <script>
 
-  let credit = 10000
+  let credit = 50000
+  let list_min_bet = [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
   let min_bet = "100"
   let totalbet = 0
   let bet_0 = 0
-  let bet_1 = 0
-  let bet_2 = 0
-  let bet_3 = 0
   let sound = 0;
   let flag_minimalbet = false;
   let path_card = "CARD/WHITE/";
@@ -97,6 +95,9 @@
   const pattern_stright_9 = [10,11,12,13,14]
   const pattern_stright_10 = [14,2,3,4,5]
   
+  let list_datasend = []
+  let c_before = 0;
+  let c_after = 0;
   let flag_all = true
   let flag_bet = true
   let flag_fullbet = true
@@ -106,7 +107,6 @@
   let point_style_result = "";
   let list_point_id = "";
   let list_point_style = "";
-  let card_background = "bg-transparent"
   let card_result_0_id = "NULL"
   let card_result_1_id = "NULL"
   let card_result_2_id = "NULL"
@@ -132,15 +132,15 @@
   let card_result_array_val = []
   let info_result = "";
   let info_card = [];
+  let isModalMinBet = false;
   let flag_win = false
   let shuffleArray = [];
   let usedIndexes = [];
   const call_play = () => {
     flag_minimalbet = false;
     bet_0 = 0
-    bet_1 = 0
-    bet_2 = 0
-    bet_3 = 0
+    c_before = 0;
+    c_after = 0;
     count_bet = 0;
     totalbet = 0;
     flag_bet = true;
@@ -176,7 +176,7 @@
     flag_minimalbet = true;
     if(parseInt(min_bet) > 0){
       if(credit > 0){
-        if(parseInt(credit) > parseInt(min_bet)){
+        if(parseInt(credit) >= parseInt(min_bet)){
           count_bet = count_bet + 1
           totalbet = totalbet + 1
           sound = 0;
@@ -186,27 +186,31 @@
               shuffleArray_card(card_result_data)
               flag_deal = true;
               flag_fullbet = false;
-              bet_0 = parseInt(min_bet);
-              credit = credit - bet_0;
-              point_style_result = "text-red-600 font-bold"
+              c_before = credit;
+              credit = credit - parseInt(min_bet);
+              c_after = credit;
+              point_style_result = "text-error font-bold"
               point_result = "-" + (totalbet * parseInt(min_bet))
               break;
             case 2:
-              bet_1 = parseInt(min_bet);
-              credit = credit - bet_1;
-              point_style_result = "text-red-600 font-bold"
+              c_before = credit;
+              credit = credit - parseInt(min_bet);
+              c_after = credit;
+              point_style_result = "text-error font-bold"
               point_result = "-" + (totalbet * parseInt(min_bet))
               break;
             case 3:
-              bet_2 = parseInt(min_bet);
-              credit = credit - bet_2;
-              point_style_result = "text-red-600 font-bold"
+              c_before = credit;
+              credit = credit - parseInt(min_bet);
+              c_after = credit;
+              point_style_result = "text-error font-bold"
               point_result = "-" + (totalbet * parseInt(min_bet))
               break;
             case 4:
-              bet_3 = parseInt(min_bet);
-              credit = credit - bet_3;
-              point_style_result = "text-red-600 font-bold"
+              c_before = credit;
+              credit = credit - parseInt(min_bet);
+              c_after = credit;
+              point_style_result = "text-error font-bold"
               point_result = "-" + (totalbet * parseInt(min_bet))
               break;
           }
@@ -231,15 +235,12 @@
       if(credit >= credit_after){
         count_bet = count_bet + 4
         totalbet = totalbet + 4
-        bet_0 = parseInt(min_bet);
-        bet_1 = parseInt(min_bet);
-        bet_2 = parseInt(min_bet);
-        bet_3 = parseInt(min_bet);
         sound = 0;
         spin[sound].play();
-        
-        credit = credit - bet_0 - bet_1 - bet_2 - bet_3;
-        point_style_result = "text-red-600 font-bold"
+        c_before = credit;
+        credit = credit - (parseInt(min_bet) * totalbet);
+        c_after = credit;
+        point_style_result = "text-error font-bold"
         point_result = "-" + (totalbet * parseInt(min_bet))
         shuffleArray_card(card_result_data)
         shuffleArray_fullbet()
@@ -616,7 +617,7 @@
             temp.push(prop + ":" + counts[prop])
         }
     }
-    console.log(temp)
+    // console.log(temp)
     let total = 0;
     let total_temp = temp.length
     let temp_string = ""
@@ -908,21 +909,14 @@
         i++;
       }
     }
-    
-    // shuffleArray.push(array[12]);
-    // shuffleArray.push(array[2]);
-    // shuffleArray.push(array[26]);
-    // shuffleArray.push(array[49]);
-    // shuffleArray.push(array[20]);
-    // shuffleArray.push(array[30]);
-    // shuffleArray.push(array[52]);
-    console.log(shuffleArray)
+    // console.log(shuffleArray)
+   
   }
   function shuffleArray_bet(){
     if(count_bet == 4){
       flag_bet = false
     }
-    
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
     if(count_bet == 1){
       card_result_0_id = shuffleArray[0].id
       card_result_2_id = shuffleArray[2].id
@@ -934,7 +928,6 @@
       card_result_2_val = shuffleArray[2].val
     }
     if(count_bet == 2){
-      
       card_result_4_id = shuffleArray[4].id
       card_result_3_img = "./"+path_card+"CARD_FLOP.png"
       card_result_4_img = shuffleArray[4].img
@@ -974,11 +967,9 @@
       card_result_array_val.push(card_result_4_val)
       card_result_array_val.push(card_result_5_val)
       card_result_array_val.push(card_result_6_val)
-      // console.log(card_result_array_val)
       // console.log(card_result_array_id)
       hitung(card_result_array_id,card_result_array_val);
     }
-  
     return shuffleArray;
   }
   function shuffleArray_fullbet(){
@@ -1022,15 +1013,15 @@
     card_result_array_val.push(card_result_4_val)
     card_result_array_val.push(card_result_5_val)
     card_result_array_val.push(card_result_6_val)
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
     hitung(card_result_array_id,card_result_array_val);
-  
     return shuffleArray;
   }
   function shuffleArray_deal(){
     if(count_bet == 4){
       flag_bet = false
     }
-    console.log("total bet : " + totalbet)
+    // console.log("total bet : " + totalbet)
     card_result_0_id = shuffleArray[0].id
     card_result_1_id = shuffleArray[1].id
     card_result_2_id = shuffleArray[2].id
@@ -1069,21 +1060,29 @@
     card_result_array_val.push(card_result_5_val)
     card_result_array_val.push(card_result_6_val)
     
+    
+    c_before = credit;
+    credit = credit - (parseInt(min_bet) * totalbet);
+    c_after = credit;
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
     hitung(card_result_array_id,card_result_array_val);
   }
   function credit_animation(credit_before,n,total_bet){
-    console.log("CREDIT BEFORE : " + credit)
-    console.log("POINT : " + (list_point[n].poin* total_bet)*parseInt(min_bet))
-    point_result = "+" + (list_point[n].poin* total_bet)*parseInt(min_bet)
+    let point = (list_point[n].poin* total_bet)*parseInt(min_bet);
+    console.log("POINT : " + point)
+    point_result = "+" + point
     let credit_target = credit_before + ((list_point[n].poin* total_bet)*parseInt(min_bet))
     
-    console.log("credit before : "+ credit)
-    console.log("credit after : "+ credit_target)
-    
     animateValue(credit, credit_target, 500)
-    point_style_result = "text-blue-600 font-bold";
+    point_style_result = "text-secondary font-bold";
     list_point_style = "bg-slate-500"
     list_point_id = list_point[n].id
+
+    
+    console.log("INFO RESULT : " + info_result)
+    console.log("INFO CARD : " + info_card)
+    sendData(totalbet,min_bet,c_before,credit_target,point,0,info_result,shuffleArray)
+
     flag_all = false
   }
   function animateValue(start, end, duration) {
@@ -1117,10 +1116,34 @@
     
     timer = setInterval(run, stepTime);
     run();
-}
+  }
+  function sendData(data_roundbet,data_minbet,data_cbefore,data_cafter,data_win,code_win,note_win,data_resultcard){
+    const objSend = {
+      round_bet:parseInt(data_roundbet),
+      bet: parseInt(data_minbet), 
+      total_bet: parseInt(data_roundbet) * parseInt(data_minbet), 
+      credit_before: parseInt(data_cbefore), 
+      credit_after: parseInt(data_cafter), 
+      win: data_win, 
+      code_win: code_win, 
+      note_win: note_win, 
+      result_card: data_resultcard
+    };
+    list_datasend.push(objSend)
+    console.log(list_datasend)
+  }
+  const handleInformation = () => {
+      if(!flag_minimalbet){
+        isModalMinBet = true
+      }
+  };
+  const handle_minbet = (e) => {
+      min_bet = parseInt(e)
+      isModalMinBet = false
+  };
 </script>
 
-<main class="container mx-auto lg:px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 xl:pb-5">
+<main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-screen lg:h-full">
   <section class="grid grid-cols-1 w-full ">
     <article class="select-none mt-2 w-full ">
       <div class="p-0">
@@ -1129,7 +1152,7 @@
           <span class="{point_style_result}">{point_result}</span>
           <br>
           <div class="text-sm">
-            BET {totalbet}x : <span class="link-accent">{new Intl.NumberFormat().format(bet_0*totalbet)}</span>
+            BET {totalbet}x : <span class="link-accent">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
           </div>
         </div>
       </div>
@@ -1137,45 +1160,45 @@
   </section>
   <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  ">
     <div class="grid grid-cols-2 w-full ">
-      <div class="flex w-full pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[0]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[0]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[0]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[5]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[5]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[5]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[5]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[5]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[1]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[1]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[1]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[1]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[1]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[6]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[6]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[6]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[6]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[6]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[2]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[2]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[2]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[2]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[2]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[7]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[7]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[7]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[7]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[7]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[3]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[3]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[3]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[3]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[3]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[8]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[8]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[8]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[8]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[8]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full pr-5 {list_point[4]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[4]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full pr-2 lg:pr-5 {list_point[4]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[4]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[4]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
-      <div class="flex w-full  pr-5 {list_point[9]["id"] == list_point_id ? list_point_style:''}">
-        <div class="w-full text-sm whitespace-nowrap">{list_point[9]["name"]}</div>
-        <div class="w-full text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*parseInt(min_bet))}</div>
+      <div class="flex w-full  pr-2 lg:pr-5 {list_point[9]["id"] == list_point_id ? list_point_style:''}">
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap">{list_point[9]["name"]}</div>
+        <div class="w-full text-xs lg:text-sm whitespace-nowrap text-right link-accent">{new Intl.NumberFormat().format((list_point[9]["poin"]*totalbet)*parseInt(min_bet))}</div>
       </div>
     </div>
     
@@ -1183,49 +1206,43 @@
   
   
   <section class="w-full flex justify-center mt-5 ">
-    <div class="relative">
-      <img src="{card_result_0_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_1_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_2_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_3_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_4_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_5_img}" alt="">
-    </div>
-    <div class="relative">
-      <img src="{card_result_6_img}" alt="">
+    <div class="avatar-group -space-x-14 lg:-space=x=6">
+      <div class="relative">
+        <img src="{card_result_0_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_1_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_2_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_3_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_4_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_5_img}" >
+      </div>
+      <div class="relative">
+        <img src="{card_result_6_img}" >
+      </div>
     </div>
   </section>
  
   <section class="flex w-full mt-5 gap-2">
-    <div class="flex flex-col  w-full">
-      <span class="self-end text-lg">Minimal Bet</span>
-      <select
-        disabled={flag_minimalbet}
-        bind:value={min_bet} 
-        class="select select-bordered max-w-xs text-lg self-end">
-        <option value=100>100</option>
-        <option value=200>200</option>
-        <option value=300>300</option>
-        <option value=400>400</option>
-        <option value=500>500</option>
-        <option value=600>600</option>
-        <option value=700>700</option>
-        <option value=800>800</option>
-        <option value=900>900</option>
-        <option value=1000>1000</option>
-      </select>
+    <div class="flex flex-col  w-full ">
+      <span class="self-end text-sm lg:text-lg">Minimal Bet</span>
+    
+      <div class="self-end bg-black text-lg p-2 w-1/3 cursor-pointer text-center rounded-sm" on:click={() => {
+        handleInformation();
+        }}>
+        <span class="text-center link-accent">{new Intl.NumberFormat().format(min_bet)}</span>
+      </div>
+    
     </div>
-    <div class="flex place-self-end gap-1 w-full">
+    <div class="flex place-self-end gap-1 w-full ">
       {#if flag_all}
         {#if !flag_bet}
           <button on:click={() => {
@@ -1252,6 +1269,28 @@
   </section>
  
 </main>
+
+
+<input type="checkbox" id="my-modal-information" class="modal-toggle" bind:checked={isModalMinBet}>
+<div class="modal" on:click|self={()=>isModalMinBet = false}>
+    <div class="modal-box relative w-11/12 max-w-lg h-1/4 overflow-hidden select-none">
+        <label for="my-modal-information" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+        <h3 class="text-xs lg:text-sm font-bold -mt-2">MINIMAL BET</h3>
+        <div class="h-fit overflow-auto scrollbar-hide mt-2" >
+            <div class="grid grid-cols-5 mt-5 gap-2 justify-self-center">
+              {#each list_min_bet as rec}
+                <div
+                  on:click={() => {
+                    handle_minbet(rec);
+                  }} 
+                  class="btn btn-sm btn-outline btn-success cursor-pointer">{new Intl.NumberFormat().format(rec)}</div>
+              {/each}
+            </div>
+            
+        </div>
+    </div>
+</div>
+
 
 <div class="hidden">
 {#each card_result_data as rec}
