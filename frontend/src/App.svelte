@@ -1,5 +1,13 @@
 <script>
-
+  import dayjs from "dayjs";
+  import utc from "dayjs/plugin/utc";
+  import timezone from "dayjs/plugin/timezone";
+  
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
+  let client_ipaddress = "123.456.234.123";
+  let client_timezone = "Asia/Jakarta";
+  let clockmachine = "";
   let credit = 50000
   let list_min_bet = [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
   let min_bet = "100"
@@ -83,7 +91,10 @@
     {id:"jk_black",val:"JK",val_display:1,code_card:"JK",img:"./CARD/WHITE/CARD_JOKER_BLACK.png"},
     {id:"jk_red",val:"JK",val_display:1,code_card:"JK",img:"./CARD/WHITE/CARD_JOKER_RED.png"},
   ]
-  
+  function updateClock() {
+    let endtime = dayjs().tz(client_timezone).format("DD MMM YYYY | HH:mm");
+    clockmachine = endtime;
+  }
   const pattern_stright_1 = [2,3,4,5,6]
   const pattern_stright_2 = [3,4,5,6,7]
   const pattern_stright_3 = [4,5,6,7,8]
@@ -133,9 +144,14 @@
   let info_result = "";
   let info_card = [];
   let isModalMinBet = false;
+  let isModal_allinvoice = false;
   let flag_win = false
   let shuffleArray = [];
   let usedIndexes = [];
+  $: {
+        setInterval(updateClock, 100);
+       
+  }
   const call_play = () => {
     flag_minimalbet = false;
     bet_0 = 0
@@ -1081,7 +1097,7 @@
     
     console.log("INFO RESULT : " + info_result)
     console.log("INFO CARD : " + info_card)
-    sendData(totalbet,min_bet,c_before,credit_target,point,0,info_result,shuffleArray)
+    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray)
 
     flag_all = false
   }
@@ -1129,7 +1145,7 @@
       note_win: note_win, 
       result_card: data_resultcard
     };
-    list_datasend.push(objSend)
+    list_datasend = [...list_datasend,objSend]
     console.log(list_datasend)
   }
   const handleInformation = () => {
@@ -1141,23 +1157,50 @@
       min_bet = parseInt(e)
       isModalMinBet = false
   };
+  const call_allinvoice = () => {
+    isModal_allinvoice = true
+    // fetch_invoicell()
+	};
 </script>
 
 <main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-screen lg:h-full">
-  <section class="grid grid-cols-1 w-full ">
-    <article class="select-none mt-2 w-full ">
-      <div class="p-0">
-        <div class="text-xs lg:text-lg bg-base-100 rounded-md p-2">
-          CREDIT : IDR <span class="link-accent" style="--value:15;">{new Intl.NumberFormat().format(credit)}</span>
-          <span class="{point_style_result}">{point_result}</span>
-          <br>
-          <div class="text-sm">
-            BET {totalbet}x : <span class="link-accent">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
+  
+  <div class="navbar">
+    <div class="navbar-start">
+      <a href="/?token=" >
+          <img src="https://sdsb4d.com/logo-green.svg" alt="SDSB" class="hover:scale-110  transition ">
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <div class="flex flex-row gap-2">
+          <label on:click={() => {
+            call_allinvoice();
+          }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50">INVOICE</label>
+      </div>
+    </div>
+    <div class="navbar-end hidden text-xs lg:text-sm lg:inline-block text-right">
+        <div class="flex items-start  ">
+          <div class="flex flex-col w-full">
+            <p class="w-full text-xs lg:text-sm text-right">
+              Asia/Jakarta <br />
+              {clockmachine}  WIB (+7)<br>
+              developer <br />
+              {client_ipaddress}
+            </p>
+            <div class="w-full text-xs lg:text-sm text-right">
+              CREDIT : IDR <span class="link-accent" style="--value:15;">{new Intl.NumberFormat().format(credit)}</span>
+              <span class="{point_style_result}">{point_result}</span>
+            </div>
+            <div class="w-full text-xs lg:text-sm text-right ">
+              ROUND BET {totalbet}x : <span class="text-error">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
+            </div>
           </div>
         </div>
-      </div>
-    </article>
-  </section>
+    </div>
+  </div>
+  
+
+ 
   <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  ">
     <div class="grid grid-cols-2 w-full ">
       <div class="flex w-full pr-2 lg:pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
@@ -1232,36 +1275,36 @@
   </section>
  
   <section class="flex w-full mt-5 gap-2">
-    <div class="flex flex-col  w-full ">
-      <span class="self-end text-sm lg:text-lg">Minimal Bet</span>
-    
-      <div class="self-end bg-black text-lg p-2 w-1/3 cursor-pointer text-center rounded-sm" on:click={() => {
-        handleInformation();
-        }}>
-        <span class="text-center link-accent">{new Intl.NumberFormat().format(min_bet)}</span>
+    <div class="flex w-full p-0 justify-end">
+      <div class="flex flex-col w-1/3 ">
+        <span class="text-sm lg:text-lg w-full text-center">Minimal Bet</span>
+        <div class=" bg-black text-lg p-2 w-full cursor-pointer text-center rounded-sm" on:click={() => {
+          handleInformation();
+          }}>
+          <span class="text-center link-accent">{new Intl.NumberFormat().format(min_bet)}</span>
+        </div>
       </div>
-    
     </div>
     <div class="flex place-self-end gap-1 w-full ">
       {#if flag_all}
         {#if !flag_bet}
           <button on:click={() => {
               call_play();
-            }} class="btn btn-success btn-md ">Play</button>
+            }} class="btn btn-success btn-md w-[240px]">Play</button>
         {/if}
         {#if flag_bet}
           <button on:click={() => {
               call_bet();
-            }} class="btn btn-primary btn-md " >BET</button>
+            }} class="btn btn-primary btn-md w-[120px]" >BET</button>
           {#if flag_fullbet}
           <button on:click={() => {
               call_fullbet();
-            }} class="btn btn-primary btn-md " >FULL BET</button>
+            }} class="btn btn-primary btn-md w-[120px]" >FULL BET</button>
           {/if}
           {#if flag_deal}
           <button on:click={() => {
               call_deal();
-            }} class="btn btn-primary btn-md ">DEAL</button>
+            }} class="btn btn-primary btn-md w-[120px]">DEAL</button>
           {/if}
         {/if}
       {/if}
@@ -1289,6 +1332,48 @@
             
         </div>
     </div>
+</div>
+
+<input type="checkbox" id="my-modal-allinvoice" class="modal-toggle" bind:checked={isModal_allinvoice}>
+<div class="modal" on:click|self={()=>isModal_allinvoice = false}>
+  <div class="modal-box relative select-none  lg:max-w-7xl h-full lg:max-h-[600px] rounded-none lg:rounded-lg p-2 lg:p-4 overflow-hidden">
+    <label for="my-modal-allinvoice" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-xs lg:text-sm font-bold -mt-1">INVOICE</h3>
+    <div class="overflow-auto h-[90%] scrollbar-thin scrollbar-thumb-green-100 mt-4">
+        <table class="table table-xs w-full" >
+            <thead class="sticky top-0">
+                <tr>
+                    <th width="1%" class="text-xs lg:text-sm text-right">ROUND BET</th>
+                    <th width="15%" class="text-xs lg:text-sm text-right">BET</th>
+                    <th width="15%" class="text-xs lg:text-sm text-right">TOTAL BET</th>
+                    <th width="15%" class="text-xs lg:text-sm text-right">CREDIT BEFORE</th>
+                    <th width="15%" class="text-xs lg:text-sm text-right">CREDIT AFTER</th>
+                    <th width="15%" class="text-xs lg:text-sm text-right">WIN</th>
+                    <th width="15%" class="text-xs lg:text-sm text-left">NOTE WIN</th>
+                    <th width="15%" class="text-xs lg:text-sm text-left">RESULT</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each list_datasend as rec}
+                <tr>
+                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.round_bet)}</td>
+                  <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.bet)}</td>
+                  <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
+                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_before)}</td>
+                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_after)}</td>
+                  <td class="text-xs lg:text-sm text-right text-secondary whitespace-nowrap">+{new Intl.NumberFormat().format(rec.win)}</td>
+                  <td class="text-xs lg:text-sm text-left whitespace-nowrap">{rec.note_win}</td>
+                    <td class="text-xs lg:text-sm text-left whitespace-nowrap">
+                      {#each rec.result_card as rec2}
+                        {rec2.id}, 
+                      {/each}
+                    </td>
+                </tr>
+                {/each}
+            </tbody>
+        </table>
+    </div>
+  </div>
 </div>
 
 
