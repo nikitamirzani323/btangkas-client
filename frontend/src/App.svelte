@@ -109,6 +109,7 @@
   const pattern_stright_10 = [14,2,3,4,5]
   
   let list_datasend = []
+  let info_card_win = []
   let counter_transaksi = 0;
   let c_before = 0;
   let c_after = 0;
@@ -171,6 +172,7 @@
     card_result_array_val = []
     info_result = "";
     info_card = [];
+    info_card_win = [];
     list_point_style = ""
     list_point_id = ""
     point_result = "";
@@ -302,11 +304,11 @@
               if(!flag_flush){
                 flag_straight = straight(arr_id)
                 if(!flag_straight){
-                  flag_threeofkind = threeofkind(arr_id,arr_val)
+                  flag_threeofkind = threeofkind(arr_id)
                   if(!flag_threeofkind){
                     flag_twopair = twopair(arr_id,arr_val)
                     if(!flag_twopair){
-                      acepair(arr_id,arr_val)
+                      acepair(arr_id)
                     }
                   }
                 }
@@ -730,6 +732,7 @@
             temp.push(prop + ":" + counts[prop])
         }
     }
+  
     if(temp.length > 0){
       let temp_string = temp[0]
       let temp_result = temp_string.split(":");
@@ -747,6 +750,21 @@
           info_result = "3 Of A Kind"
           info_card = pattern_stright_10
           flag_win = true
+
+          for(let i in arr_id){
+            let temp_data = card_result_data.find(card => card.id == arr_id[i])
+            // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+            for(let x=0;x<temp.length;x++){
+              temp_result = temp[x].split(":");
+              if(temp_result[0] == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+            }
+          }
+
           credit_animation(credit,7,totalbet)
           flag_func = true;
         }
@@ -758,10 +776,26 @@
           }
         }
         total_card = parseInt(total_temp) + total_jk
+    
         if(total_card == 3){
           info_result = "3 Of A Kind"
           info_card = pattern_stright_10
           flag_win = true
+
+          for(let i in arr_id){
+            let temp_data = card_result_data.find(card => card.id == arr_id[i])
+            // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+            for(let x=0;x<temp.length;x++){
+              temp_result = temp[x].split(":");
+              if(temp_result[0] == temp_data.val_display || "1" == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+            }
+          }
+
           credit_animation(credit,7,totalbet)
           flag_func = true;
         }
@@ -782,6 +816,7 @@
         counts[arr_val[i]] = 1
       }
     }
+   
     let temp = [];
     for(let prop in counts){
       if (counts[prop] >= 2){
@@ -833,6 +868,19 @@
           info_card = temp
           flag_win = true
           flag = true
+
+          for(let i in arr_id){
+            let temp_data = card_result_data.find(card => card.id == arr_id[i])
+            for(let x=0;x<info_card.length;x++){
+              temp_result = info_card[x].split(":");
+              if(temp_result[0] == temp_data.val){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+            }
+          }
           credit_animation(credit,8,totalbet)
         }
       }
@@ -849,6 +897,7 @@
       obj["code_card"] = temp_data.code_card 
       obj["val"] = temp_data.val 
       obj["val_display"] = temp_data.val_display 
+      obj["img"] = temp_data.img 
       objdata_master.push(obj)
       obj = []
     }
@@ -869,6 +918,7 @@
     let total_as = 0;
     let total_jk = 0;
     let total_card = 0;
+    
     if(temp.length > 0){
       let temp_string = temp[0]
       let temp_result = temp_string.split(":");
@@ -878,9 +928,17 @@
         for(let i=0;i<objdata_master.length;i++){
           if(objdata_master[i].val == "AS"){
             total_as = total_as + 1;
+            obj["id"] = objdata_master[i].id
+            obj["img"] = objdata_master[i].img
+            info_card_win.push(obj)
+            obj = []
           }
           if(objdata_master[i].code_card == "JK"){
             total_jk = total_jk + 1;
+            obj["id"] = objdata_master[i].id
+            obj["img"] = objdata_master[i].img
+            info_card_win.push(obj)
+            obj = []
           }
         }
         
@@ -889,7 +947,7 @@
           info_result = "ACE PAIR"
           info_card = temp
           flag_win = true
-          credit_animation(credit,8,totalbet)
+          credit_animation(credit,9,totalbet)
           flag_func = true;
         }
       }
@@ -897,9 +955,17 @@
       for(let i=0;i<objdata_master.length;i++){
           if(objdata_master[i].val == "AS"){
             total_as = total_as + 1;
+            obj["id"] = objdata_master[i].id
+            obj["img"] = objdata_master[i].img
+            info_card_win.push(obj)
+            obj = []
           }
           if(objdata_master[i].code_card == "JK"){
             total_jk = total_jk + 1;
+            obj["id"] = objdata_master[i].id
+            obj["img"] = objdata_master[i].img
+            info_card_win.push(obj)
+            obj = []
           }
       }
       total_card = total_as + total_jk
@@ -907,7 +973,7 @@
           info_result = "ACE PAIR"
           info_card = temp
           flag_win = true
-          credit_animation(credit,8,totalbet)
+          credit_animation(credit,9,totalbet)
           flag_func = true;
       }
     }
@@ -927,8 +993,50 @@
         i++;
       }
     }
+    // ==== ACE PAIR ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[12]);
+    // shuffleArray.push(array[25]);
+    // shuffleArray.push(array[32]);
+    // shuffleArray.push(array[18]);
+    // shuffleArray.push(array[20]);
+    // shuffleArray.push(array[30]);
+    // shuffleArray.push(array[28]);
     // console.log(shuffleArray)
-   
+
+    // ==== 2 PAIR ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[8]);
+    // shuffleArray.push(array[21]);
+    // shuffleArray.push(array[22]);
+    // shuffleArray.push(array[48]);
+    // shuffleArray.push(array[49]);
+    // shuffleArray.push(array[30]);
+    // shuffleArray.push(array[28]);
+    // console.log(shuffleArray)
+
+    // ==== 3 kind 1 ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[10]);
+    // shuffleArray.push(array[23]);
+    // shuffleArray.push(array[36]);
+    // shuffleArray.push(array[39]);
+    // shuffleArray.push(array[3]);
+    // shuffleArray.push(array[18]);
+    // shuffleArray.push(array[32]);
+    // console.log(shuffleArray)
+
+    // ==== 3 kind 2 ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[10]);
+    // shuffleArray.push(array[23]);
+    // shuffleArray.push(array[39]);
+    // shuffleArray.push(array[3]);
+    // shuffleArray.push(array[18]);
+    // shuffleArray.push(array[32]);
+    // shuffleArray.push(array[53]);
+    // console.log(shuffleArray)
+
   }
   function shuffleArray_bet(){
     if(count_bet == 4){
@@ -1090,7 +1198,7 @@
   }
   function credit_animation(credit_before,n,total_bet){
     let point = (list_point[n].poin* total_bet)*parseInt(min_bet);
-    console.log("POINT : " + point)
+    // console.log("POINT : " + point)
     point_result = "+" + point
     let credit_target = credit_before + ((list_point[n].poin* total_bet)*parseInt(min_bet))
     
@@ -1100,8 +1208,9 @@
     list_point_id = list_point[n].id
 
     
-    console.log("INFO RESULT : " + info_result)
-    console.log("INFO CARD : " + info_card)
+    // console.log("POINT ID : " + list_point_id)
+    // console.log("INFO RESULT : " + info_result)
+    // console.log("INFO CARD : " + info_card)
 
 
     c_before = credit;
@@ -1109,7 +1218,7 @@
     c_after = credit;
 
 
-    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,info_card,"WIN")
+    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,info_card_win,"WIN")
 
     flag_all = false
   }
@@ -1170,7 +1279,6 @@
       status_transaction: data_statustransaksi
     };
     list_datasend = [...list_datasend,objSend]
-    console.log(list_datasend)
   }
   const handleInformation = () => {
       if(!flag_minimalbet){
@@ -1401,8 +1509,10 @@
                         <img  src="{rec2.img}" alt="" srcset=""> 
                       {/each}
                     </div>
-                    <div class="mt-5 text-xs">
-                      {rec.result_card_win}
+                    <div class="grid grid-cols-7 mt-5 text-xs">
+                      {#each rec.result_card_win as rec2}
+                        <img  src="{rec2.img}" alt="" srcset=""> 
+                      {/each}
                     </div>
                   </td>
                 </tr>
