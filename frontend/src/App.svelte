@@ -8,6 +8,7 @@
   let client_ipaddress = "123.456.234.123";
   let client_timezone = "Asia/Jakarta";
   let clockmachine = "";
+  let clockmachine_data = "";
   let credit = 50000
   let list_min_bet = [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
   let min_bet = "100"
@@ -92,7 +93,9 @@
   ]
   function updateClock() {
     let endtime = dayjs().tz(client_timezone).format("DD MMM YYYY | HH:mm");
+    let endtime_data = dayjs().tz(client_timezone).format("YYYY-MM-DD HH:mm:ss");
     clockmachine = endtime;
+    clockmachine_data = endtime_data;
   }
   const pattern_stright_1 = [2,3,4,5,6]
   const pattern_stright_2 = [3,4,5,6,7]
@@ -106,6 +109,7 @@
   const pattern_stright_10 = [14,2,3,4,5]
   
   let list_datasend = []
+  let counter_transaksi = 0;
   let c_before = 0;
   let c_after = 0;
   let flag_all = true
@@ -930,7 +934,7 @@
     if(count_bet == 4){
       flag_bet = false
     }
-    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"LOSE")
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"","LOSE")
     if(count_bet == 1){
       card_result_0_id = shuffleArray[0].id
       card_result_2_id = shuffleArray[2].id
@@ -1027,7 +1031,11 @@
     card_result_array_val.push(card_result_4_val)
     card_result_array_val.push(card_result_5_val)
     card_result_array_val.push(card_result_6_val)
-    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"LOSE")
+
+   
+
+  
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"","LOSE")
     hitung(card_result_array_id,card_result_array_val);
     return shuffleArray;
   }
@@ -1094,7 +1102,14 @@
     
     console.log("INFO RESULT : " + info_result)
     console.log("INFO CARD : " + info_card)
-    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,"WIN")
+
+
+    c_before = credit;
+    credit = credit - (parseInt(min_bet) * totalbet);
+    c_after = credit;
+
+
+    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,info_card,"WIN")
 
     flag_all = false
   }
@@ -1130,14 +1145,17 @@
     timer = setInterval(run, stepTime);
     run();
   }
-  function sendData(data_roundbet,data_minbet,data_cbefore,data_cafter,data_win,code_win,note_win,data_resultcard,data_statustransaksi){
+  function sendData(data_roundbet,data_minbet,data_cbefore,data_cafter,data_win,code_win,note_win,data_resultcard,data_resultcardwin,data_statustransaksi){
     let status_css = "";
     if(data_statustransaksi == "LOSE"){
       status_css = "bg-error text-white";
     }else{
       status_css = "bg-success text-black";
     }
+    counter_transaksi = counter_transaksi + 1
     const objSend = {
+      id_transaksi:counter_transaksi,
+      date_transaksi:clockmachine_data,
       round_bet:parseInt(data_roundbet),
       bet: parseInt(data_minbet), 
       total_bet: parseInt(data_roundbet) * parseInt(data_minbet), 
@@ -1147,6 +1165,7 @@
       code_win: code_win, 
       note_win: note_win, 
       result_card: data_resultcard,
+      result_card_win: data_resultcardwin,
       status_transaction_css: status_css,
       status_transaction: data_statustransaksi
     };
@@ -1347,35 +1366,45 @@
         <table class="table table-xs w-full" >
             <thead class="sticky top-0">
                 <tr>
-                    <th width="10%" class="text-xs lg:text-sm text-center">STATUS</th>
-                    <th width="1%" class="text-xs lg:text-sm text-right">ROUND BET</th>
-                    <th width="15%" class="text-xs lg:text-sm text-right">BET</th>
-                    <th width="15%" class="text-xs lg:text-sm text-right">TOTAL BET</th>
-                    <th width="15%" class="text-xs lg:text-sm text-right">CREDIT BEFORE</th>
-                    <th width="15%" class="text-xs lg:text-sm text-right">CREDIT AFTER</th>
-                    <th width="15%" class="text-xs lg:text-sm text-right">WIN</th>
-                    <th width="*" class="text-xs lg:text-sm text-left">NOTE WIN</th>
-                    <th width="15%" class="text-xs lg:text-sm text-left">RESULT</th>
+                    <th width="1%" class="text-xs text-center align-top">ID</th>
+                    <th width="10%" class="text-xs text-center align-top">DATE</th>
+                    <th width="10%" class="text-xs text-center align-top">STATUS</th>
+                    <th width="1%" class="text-xs text-right align-top">ROUND<br />BET</th>
+                    <th width="5%" class="text-xs text-right align-top">BET</th>
+                    <th width="5%" class="text-xs text-right align-top">CREDIT<br />BEFORE</th>
+                    <th width="5%" class="text-xs text-right align-top">TOTAL<br />BET</th>
+                    <th width="10%" class="text-xs text-right align-top">WIN</th>
+                    <th width="10%" class="text-xs text-right align-top">CREDIT<br />AFTER</th>
+                    <th width="*" class="text-xs text-left align-top">RESULT</th>
                 </tr>
             </thead>
             <tbody>
                 {#each list_datasend as rec}
                 <tr>
-                  <td class="text-xs lg:text-sm text-center whitespace-nowrap">
+                  <td class="text-xs  text-center whitespace-nowrap">{rec.id_transaksi}</td>
+                  <td class="text-xs  text-center whitespace-nowrap">{rec.date_transaksi}</td>
+                  <td class="text-xs  text-center whitespace-nowrap">
                     <span class="{rec.status_transaction_css} p-1.5 text-xs lg:text-sm  uppercase  rounded-lg w-20 ">{rec.status_transaction}</span>
                   </td>
-                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.round_bet)}</td>
-                  <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.bet)}</td>
-                  <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
-                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_before)}</td>
-                  <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_after)}</td>
-                  <td class="text-xs lg:text-sm text-right text-secondary whitespace-nowrap">+{new Intl.NumberFormat().format(rec.win)}</td>
-                  <td class="text-xs lg:text-sm text-left whitespace-nowrap">{rec.note_win}</td>
-                    <td class="text-xs lg:text-sm text-left whitespace-nowrap">
+                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.round_bet)}</td>
+                  <td class="text-xs text-right text-error whitespace-nowrap">(-{new Intl.NumberFormat().format(rec.bet)})</td>
+                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_before)}</td>
+                  <td class="text-xs text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
+                  <td class="text-xs text-right text-secondary whitespace-nowrap">(+{new Intl.NumberFormat().format(rec.win)})</td>
+                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_after)}</td>
+                  <td class="text-xs text-left whitespace-nowrap w-52">
+                    <div class="text-xs">
+                      {rec.note_win}
+                    </div>
+                    <div class="grid grid-cols-7 w-full mt-5">
                       {#each rec.result_card as rec2}
-                        {rec2.id}, 
+                        <img  src="{rec2.img}" alt="" srcset=""> 
                       {/each}
-                    </td>
+                    </div>
+                    <div class="mt-5 text-xs">
+                      {rec.result_card_win}
+                    </div>
+                  </td>
                 </tr>
                 {/each}
             </tbody>
