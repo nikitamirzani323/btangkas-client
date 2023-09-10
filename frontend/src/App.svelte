@@ -12,7 +12,6 @@
   let list_min_bet = [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
   let min_bet = "100"
   let totalbet = 0
-  let bet_0 = 0
   let sound = 0;
   let flag_minimalbet = false;
   let path_card = "CARD/WHITE/";
@@ -154,7 +153,6 @@
   }
   const call_play = () => {
     flag_minimalbet = false;
-    bet_0 = 0
     c_before = 0;
     c_after = 0;
     count_bet = 0;
@@ -932,7 +930,7 @@
     if(count_bet == 4){
       flag_bet = false
     }
-    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"LOSE")
     if(count_bet == 1){
       card_result_0_id = shuffleArray[0].id
       card_result_2_id = shuffleArray[2].id
@@ -1029,7 +1027,7 @@
     card_result_array_val.push(card_result_4_val)
     card_result_array_val.push(card_result_5_val)
     card_result_array_val.push(card_result_6_val)
-    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
+    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray,"LOSE")
     hitung(card_result_array_id,card_result_array_val);
     return shuffleArray;
   }
@@ -1096,7 +1094,7 @@
     
     console.log("INFO RESULT : " + info_result)
     console.log("INFO CARD : " + info_card)
-    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray)
+    sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,"WIN")
 
     flag_all = false
   }
@@ -1132,7 +1130,13 @@
     timer = setInterval(run, stepTime);
     run();
   }
-  function sendData(data_roundbet,data_minbet,data_cbefore,data_cafter,data_win,code_win,note_win,data_resultcard){
+  function sendData(data_roundbet,data_minbet,data_cbefore,data_cafter,data_win,code_win,note_win,data_resultcard,data_statustransaksi){
+    let status_css = "";
+    if(data_statustransaksi == "LOSE"){
+      status_css = "bg-error text-white";
+    }else{
+      status_css = "bg-success text-black";
+    }
     const objSend = {
       round_bet:parseInt(data_roundbet),
       bet: parseInt(data_minbet), 
@@ -1142,7 +1146,9 @@
       win: data_win, 
       code_win: code_win, 
       note_win: note_win, 
-      result_card: data_resultcard
+      result_card: data_resultcard,
+      status_transaction_css: status_css,
+      status_transaction: data_statustransaksi
     };
     list_datasend = [...list_datasend,objSend]
     console.log(list_datasend)
@@ -1272,7 +1278,6 @@
       </div>
     </div>
   </section>
- 
   <section class="flex w-full mt-5 gap-2">
     <div class="flex w-full p-0 justify-end">
       <div class="flex flex-col w-1/3 ">
@@ -1342,19 +1347,23 @@
         <table class="table table-xs w-full" >
             <thead class="sticky top-0">
                 <tr>
+                    <th width="10%" class="text-xs lg:text-sm text-center">STATUS</th>
                     <th width="1%" class="text-xs lg:text-sm text-right">ROUND BET</th>
                     <th width="15%" class="text-xs lg:text-sm text-right">BET</th>
                     <th width="15%" class="text-xs lg:text-sm text-right">TOTAL BET</th>
                     <th width="15%" class="text-xs lg:text-sm text-right">CREDIT BEFORE</th>
                     <th width="15%" class="text-xs lg:text-sm text-right">CREDIT AFTER</th>
                     <th width="15%" class="text-xs lg:text-sm text-right">WIN</th>
-                    <th width="15%" class="text-xs lg:text-sm text-left">NOTE WIN</th>
+                    <th width="*" class="text-xs lg:text-sm text-left">NOTE WIN</th>
                     <th width="15%" class="text-xs lg:text-sm text-left">RESULT</th>
                 </tr>
             </thead>
             <tbody>
                 {#each list_datasend as rec}
                 <tr>
+                  <td class="text-xs lg:text-sm text-center whitespace-nowrap">
+                    <span class="{rec.status_transaction_css} p-1.5 text-xs lg:text-sm  uppercase  rounded-lg w-20 ">{rec.status_transaction}</span>
+                  </td>
                   <td class="text-xs lg:text-sm text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.round_bet)}</td>
                   <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.bet)}</td>
                   <td class="text-xs lg:text-sm text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
