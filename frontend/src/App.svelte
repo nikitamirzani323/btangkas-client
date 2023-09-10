@@ -1080,7 +1080,6 @@
     c_before = credit;
     credit = credit - (parseInt(min_bet) * totalbet);
     c_after = credit;
-    sendData(totalbet,min_bet,c_before,c_after,0,0,"",shuffleArray)
     hitung(card_result_array_id,card_result_array_val);
   }
   function credit_animation(credit_before,n,total_bet){
