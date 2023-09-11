@@ -129,6 +129,15 @@
   let card_result_4_id = "NULL"
   let card_result_5_id = "NULL"
   let card_result_6_id = "NULL"
+
+  let card_result_0_class = ""
+  let card_result_1_class = ""
+  let card_result_2_class = ""
+  let card_result_3_class = ""
+  let card_result_4_class = ""
+  let card_result_5_class = ""
+  let card_result_6_class = ""
+
   let card_result_0_img = "./"+path_card+"CARD_FLOP.png"
   let card_result_1_img = "./"+path_card+"CARD_FLOP.png"
   let card_result_2_img = "./"+path_card+"CARD_FLOP.png"
@@ -192,6 +201,13 @@
     card_result_4_val = ""
     card_result_5_val = ""
     card_result_6_val = ""
+    card_result_0_class = ""
+    card_result_1_class = ""
+    card_result_2_class = ""
+    card_result_3_class = ""
+    card_result_4_class = ""
+    card_result_5_class = ""
+    card_result_6_class = ""
 	};
   const call_bet = () => {
     flag_minimalbet = true;
@@ -845,13 +861,13 @@
         info_card = temp
         flag_win = true
         flag = true
-        
+      
         for(let i in arr_id){
           let temp_data = card_result_data.find(card => card.id == arr_id[i])
           // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
           for(let x=0;x<temp.length;x++){
             temp_result = temp[x].split(":");
-            if(temp_result[0] == temp_data.val_display){
+            if(temp_result[0] == temp_data.val){
               obj["id"] = temp_data.id
               obj["img"] = temp_data.img
               info_card_win.push(obj)
@@ -1478,6 +1494,28 @@
     // shuffleArray.push(array[29]);
     // console.log(shuffleArray)
 
+    // ==== FULL HOUSE 2===
+    // shuffleArray = [];
+    // shuffleArray.push(array[35]);
+    // shuffleArray.push(array[3]);
+    // shuffleArray.push(array[23]);
+    // shuffleArray.push(array[9]);
+    // shuffleArray.push(array[21]);
+    // shuffleArray.push(array[48]);
+    // shuffleArray.push(array[42]);
+    // console.log(shuffleArray)
+
+    // ==== FULL HOUSE ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[1]);
+    // shuffleArray.push(array[14]);
+    // shuffleArray.push(array[27]);
+    // shuffleArray.push(array[6]);
+    // shuffleArray.push(array[8]);
+    // shuffleArray.push(array[32]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
+
     // ==== 4 OF A KIND ===
     // shuffleArray = [];
     // shuffleArray.push(array[6]);
@@ -1712,7 +1750,89 @@
     credit = credit - (parseInt(min_bet) * totalbet);
     c_after = credit;
 
+    // console.log(shuffleArray)
+    // console.log(info_card_win)
+    // console.log(card_result_0_id+","+card_result_1_id+","+card_result_2_id+","+card_result_3_id+","+card_result_4_id+","+card_result_5_id+","+card_result_6_id)
+    // for(let i in info_card_win){
+    //   // let temp_data = shuffleArray.find(card => card.id != info_card_win[i].id)
+    //   switch(info_card_win[i].id){
+    //     case card_result_0_id:
+    //       card_result_0_class = "brightness-50"
+    //       break;
+    //     case card_result_1_id:
+    //       card_result_1_class = "brightness-50"
+    //       break;
+    //     case card_result_2_id:
+    //       card_result_2_class = "brightness-50"
+    //       break;
+    //     case card_result_3_id:
+    //       card_result_3_class = "brightness-50"
+    //       break;
+    //     case card_result_4_id:
+    //       card_result_4_class = "brightness-50"
+    //       break;
+    //     case card_result_5_id:
+    //       card_result_5_class = "brightness-50"
+    //       break;
+    //     case card_result_6_id:
+    //       card_result_6_class = "brightness-50"
+    //       break;
+    //   }
+    // }
+    card_result_0_class = "brightness-50"
+    card_result_1_class = "brightness-50"
+    card_result_2_class = "brightness-50"
+    card_result_3_class = "brightness-50"
+    card_result_4_class = "brightness-50"
+    card_result_5_class = "brightness-50"
+    card_result_6_class = "brightness-50"
 
+    for(let i=0;i<shuffleArray.length;i++){
+      let flag_data = true;
+      for(let j=0;j<info_card_win.length;j++){
+        if(shuffleArray[i].id == info_card_win[j].id){
+          flag_data = false
+        }
+      }
+      switch(shuffleArray[i].id){
+        case card_result_0_id:
+          if(!flag_data){
+            card_result_0_class = ""
+          }
+          break;
+        case card_result_1_id:
+          if(!flag_data){
+            card_result_1_class = ""
+          }
+          break;
+        case card_result_2_id:
+          if(!flag_data){
+            card_result_2_class = ""
+          }
+          break;
+        case card_result_3_id:
+          if(!flag_data){
+            card_result_3_class = ""
+          }
+          break;
+        case card_result_4_id:
+          if(!flag_data){
+            card_result_4_class = ""
+          }
+          break;
+        case card_result_5_id:
+          if(!flag_data){
+            card_result_5_class = ""
+          }
+          break;
+        case card_result_6_id:
+          if(!flag_data){
+            card_result_6_class = ""
+          }
+          break;
+      }
+    }
+    
     sendData(0,0,c_before,credit_target,point,0,info_result,shuffleArray,info_card_win,"WIN")
 
     flag_all = false
@@ -1905,25 +2025,25 @@
   <section class="w-full flex justify-center mt-5 ">
     <div class="avatar-group -space-x-14 lg:-space=x=6">
       <div class="relative">
-        <img src="{card_result_0_img}" >
+        <img class="{card_result_0_class}" src="{card_result_0_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_1_img}" >
+        <img class="{card_result_1_class}" src="{card_result_1_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_2_img}" >
+        <img class="{card_result_2_class}" src="{card_result_2_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_3_img}" >
+        <img class="{card_result_3_class}" src="{card_result_3_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_4_img}" >
+        <img class="{card_result_4_class}" src="{card_result_4_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_5_img}" >
+        <img class="{card_result_5_class}" src="{card_result_5_img}" >
       </div>
       <div class="relative">
-        <img src="{card_result_6_img}" >
+        <img class="{card_result_6_class}" src="{card_result_6_img}" >
       </div>
     </div>
   </section>
