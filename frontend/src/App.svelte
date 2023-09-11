@@ -1794,7 +1794,6 @@
 </script>
 
 <main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-screen lg:h-full">
-  
   <div class="navbar">
     <div class="navbar-start">
       <a href="/?token=" >
@@ -1831,9 +1830,7 @@
         </div>
     </div>
   </div>
-  
 
- 
   <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  ">
     <div class="grid grid-cols-2 w-full ">
       <div class="flex w-full pr-2 lg:pr-5 {list_point[0]["id"] == list_point_id ? list_point_style:''}">
@@ -1986,31 +1983,31 @@
             <thead class="sticky top-0">
                 <tr>
                     <th width="1%" class="text-xs text-center align-top">ID</th>
-                    <th width="10%" class="text-xs text-center align-top">DATE</th>
-                    <th width="10%" class="text-xs text-center align-top">STATUS</th>
+                    <th width="4%" class="text-xs text-center align-top">DATE</th>
+                    <th width="4%" class="text-xs text-center align-top">STATUS</th>
                     <th width="1%" class="text-xs text-right align-top">ROUND<br />BET</th>
                     <th width="5%" class="text-xs text-right align-top">BET</th>
                     <th width="5%" class="text-xs text-right align-top">CREDIT<br />BEFORE</th>
                     <th width="5%" class="text-xs text-right align-top">TOTAL<br />BET</th>
-                    <th width="10%" class="text-xs text-right align-top">WIN</th>
-                    <th width="10%" class="text-xs text-right align-top">CREDIT<br />AFTER</th>
+                    <th width="5%" class="text-xs text-right align-top">WIN</th>
+                    <th width="5%" class="text-xs text-right align-top">CREDIT<br />AFTER</th>
                     <th width="*" class="text-xs text-left align-top">RESULT</th>
                 </tr>
             </thead>
             <tbody>
                 {#each list_datasend as rec}
                 <tr>
-                  <td class="text-xs  text-center whitespace-nowrap">{rec.id_transaksi}</td>
-                  <td class="text-xs  text-center whitespace-nowrap">{rec.date_transaksi}</td>
-                  <td class="text-xs  text-center whitespace-nowrap">
+                  <td class="text-xs  text-center whitespace-nowrap align-top">{rec.id_transaksi}</td>
+                  <td class="text-xs  text-center whitespace-nowrap align-top">{rec.date_transaksi}</td>
+                  <td class="text-xs  text-center whitespace-nowrap align-top">
                     <span class="{rec.status_transaction_css} p-1.5 text-xs lg:text-sm  uppercase  rounded-lg w-20 ">{rec.status_transaction}</span>
                   </td>
-                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.round_bet)}</td>
-                  <td class="text-xs text-right text-error whitespace-nowrap">(-{new Intl.NumberFormat().format(rec.bet)})</td>
-                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_before)}</td>
-                  <td class="text-xs text-right text-error whitespace-nowrap">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
-                  <td class="text-xs text-right text-secondary whitespace-nowrap">(+{new Intl.NumberFormat().format(rec.win)})</td>
-                  <td class="text-xs text-right link-accent whitespace-nowrap">{new Intl.NumberFormat().format(rec.credit_after)}</td>
+                  <td class="text-xs text-right link-accent whitespace-nowrap align-top">{new Intl.NumberFormat().format(rec.round_bet)}</td>
+                  <td class="text-xs text-right text-error whitespace-nowrap align-top">(-{new Intl.NumberFormat().format(rec.bet)})</td>
+                  <td class="text-xs text-right link-accent whitespace-nowrap align-top">{new Intl.NumberFormat().format(rec.credit_before)}</td>
+                  <td class="text-xs text-right text-error whitespace-nowrap align-top">-{new Intl.NumberFormat().format(rec.total_bet)}</td>
+                  <td class="text-xs text-right text-secondary whitespace-nowrap align-top">(+{new Intl.NumberFormat().format(rec.win)})</td>
+                  <td class="text-xs text-right link-accent whitespace-nowrap align-top">{new Intl.NumberFormat().format(rec.credit_after)}</td>
                   <td class="text-xs text-left whitespace-nowrap w-52">
                     <div class="text-xs">
                       {rec.note_win}
