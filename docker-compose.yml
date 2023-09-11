@@ -8,5 +8,5 @@ services:
     volumes:
     - ./svelte:/app/svelte
     ports:
-      - 3014:3014
+      - 2116:2116
     restart: always

@@ -10,7 +10,7 @@
   let clockmachine = "";
   let clockmachine_data = "";
   let credit = 50000
-  let list_min_bet = [100,200,300,400,500,600,700,800,900,1000,1500,2000,2500,3000,3500,4000,4500,5000]
+  let list_min_bet = [100,500,1000,1500,5000,10000,25000]
   let min_bet = "100"
   let totalbet = 0
   let sound = 0;
