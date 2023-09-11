@@ -326,6 +326,7 @@
   function royal_flush(arr_id){
     let flag_func = false
     let obj = []
+    let objdata_tampung_win = []
     let objdata_master = []
     for(let i in arr_id){
       let temp_data = card_result_data.find(card => card.id == arr_id[i])
@@ -333,6 +334,7 @@
       obj["val"] = temp_data.val 
       obj["code_card"] = temp_data.code_card 
       obj["val_display"] = temp_data.val_display 
+      obj["img"] = temp_data.img 
       objdata_master.push(obj)
       obj = []
     }
@@ -350,6 +352,7 @@
             temp.push(prop + ":" + counts[prop])
         }
     }
+    // console.log(temp)
     if(temp.length > 0){
       let temp_string = temp[0]
       let temp_result = temp_string.split(":");
@@ -360,16 +363,40 @@
         for(let i=0;i<objdata_master.length;i++){
           switch(objdata_master[i].val){
             case "10":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
             case "J":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
             case "K":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
             case "Q":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
             case "AS":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
             case "JK":
+              obj["id"] = objdata_master[i].id
+              obj["img"] = objdata_master[i].img
+              objdata_tampung_win.push(obj)
+              obj = [];
               total_jk = total_jk + 1;break;
           }
         }
@@ -378,6 +405,15 @@
           info_result = "Royal Flush"
           info_card = pattern_stright_10
           flag_win = true
+          
+          
+          for(let x=0;x<objdata_tampung_win.length;x++){
+            obj["id"] = objdata_tampung_win[x].id
+            obj["img"] = objdata_tampung_win[x].img
+            info_card_win.push(obj)
+            obj = [];
+          }
+
           credit_animation(credit,0,totalbet)
           flag_func = true;
         }
@@ -411,6 +447,7 @@
             temp.push(prop + ":" + counts[prop])
         }
     }
+    // console.log(temp)
     if(temp.length > 0){
       let temp_string = temp[0]
       let temp_result = temp_string.split(":");
@@ -428,6 +465,28 @@
           info_result = "5 Of A Kind"
           info_card = pattern_stright_10
           flag_win = true
+
+
+          for(let i in arr_id){
+            let temp_data = card_result_data.find(card => card.id == arr_id[i])
+            // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+            for(let x=0;x<temp.length;x++){
+              temp_result = temp[x].split(":");
+              if(temp_result[0] == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+              if("1" == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+            }
+          }
+
           credit_animation(credit,1,totalbet)
           flag_func = true;
         }
@@ -443,6 +502,27 @@
           info_result = "5 Of A Kind"
           info_card = pattern_stright_10
           flag_win = true
+
+          for(let i in arr_id){
+            let temp_data = card_result_data.find(card => card.id == arr_id[i])
+            // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+            for(let x=0;x<temp.length;x++){
+              temp_result = temp[x].split(":");
+              if(temp_result[0] == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+              if("1" == temp_data.val_display){
+                obj["id"] = temp_data.id
+                obj["img"] = temp_data.img
+                info_card_win.push(obj)
+                obj = [];
+              }
+            }
+          }
+
           credit_animation(credit,1,totalbet)
           flag_func = true;
         }
@@ -511,6 +591,142 @@
           info_result = "STRAIGHT FLUSH"
           info_card = pattern_stright_10
           flag_win = true
+
+          let temp_data_win = []
+          for(let k in arr_id){
+              let temp_data = card_result_data.find(card => card.id == arr_id[k])            
+              switch(i){
+                case 0:
+                  for(let t=0;t<pattern_stright_1.length;t++){
+                    if(pattern_stright_1[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 1:
+                  for(let t=0;t<pattern_stright_2.length;t++){
+                    if(pattern_stright_2[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 2:
+                  for(let t=0;t<pattern_stright_3.length;t++){
+                    if(pattern_stright_3[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 3:
+                  for(let t=0;t<pattern_stright_4.length;t++){
+                    if(pattern_stright_4[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 4:
+                  for(let t=0;t<pattern_stright_5.length;t++){
+                    if(pattern_stright_5[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 5:
+                  for(let t=0;t<pattern_stright_6.length;t++){
+                    if(pattern_stright_6[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 6:
+                  for(let t=0;t<pattern_stright_7.length;t++){
+                    if(pattern_stright_7[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 7:
+                  for(let t=0;t<pattern_stright_8.length;t++){
+                    if(pattern_stright_8[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 8:
+                  for(let t=0;t<pattern_stright_9.length;t++){
+                    if(pattern_stright_9[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+                case 9:
+                  for(let t=0;t<pattern_stright_10.length;t++){
+                    if(pattern_stright_10[t] == temp_data.val_display){
+                      obj["id"] = temp_data.id
+                      obj["img"] = temp_data.img
+                      obj["val_display"] = temp_data.val_display
+                      temp_data_win.push(obj)
+                      obj = [];
+                    }
+                  }
+                  break;
+              }
+          }
+
+          const filteredArr = temp_data_win.reduce((temp_data_win, current) => {
+            const x = temp_data_win.find(item => item.val_display === current.val_display);
+            if (!x) {
+              return temp_data_win.concat([current]);
+            } else {
+              return temp_data_win;
+            }
+          }, []);
+
+      
+          for(let t=0;t<filteredArr.length;t++){
+              obj["id"] = filteredArr[t].id
+              obj["img"] = filteredArr[t].img
+              info_card_win.push(obj)
+              obj = [];
+          }
+
+
           credit_animation(credit,2,totalbet)
           flag_func = true;
           break;
@@ -559,11 +775,26 @@
         total = total + parseInt(temp_result[1])
     }
     if(total == 4){//FOUR OF KIND
-      console.log("TOTAL :"+total+" FOUR OF KIND")
       info_result = "FOUR OF KIND"
       info_card = temp
       flag_win = true
       flag = true
+      
+
+      for(let i in arr_id){
+        let temp_data = card_result_data.find(card => card.id == arr_id[i])
+        // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+        for(let x=0;x<temp.length;x++){
+          temp_result = temp[x].split(":");
+          if(temp_result[0] == temp_data.val_display){
+            obj["id"] = temp_data.id
+            obj["img"] = temp_data.img
+            info_card_win.push(obj)
+            obj = [];
+          }
+        }
+      }
+
       credit_animation(credit,3,totalbet)
     }
     return flag
@@ -608,25 +839,27 @@
         total = total + parseInt(temp_result[1])
     }
     if(total == 5){//FULL HOUSE
-      info_result = "FULL HOUSE"
-      info_card = temp
-      flag_win = true
-      flag = true
-
-      for(let i in arr_id){
-        let temp_data = card_result_data.find(card => card.id == arr_id[i])
-        console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
-        for(let x=0;x<temp.length;x++){
-          temp_result = temp[x].split(":");
-          if(temp_result[0] == temp_data.val_display){
-            obj["id"] = temp_data.id
-            obj["img"] = temp_data.img
-            info_card_win.push(obj)
-            obj = [];
+      if(temp.length == 2){
+        info_result = "FULL HOUSE"
+        info_card = temp
+        flag_win = true
+        flag = true
+        
+        for(let i in arr_id){
+          let temp_data = card_result_data.find(card => card.id == arr_id[i])
+          // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.val_display)
+          for(let x=0;x<temp.length;x++){
+            temp_result = temp[x].split(":");
+            if(temp_result[0] == temp_data.val_display){
+              obj["id"] = temp_data.id
+              obj["img"] = temp_data.img
+              info_card_win.push(obj)
+              obj = [];
+            }
           }
         }
+        credit_animation(credit,4,totalbet)
       }
-      credit_animation(credit,4,totalbet)
     }
     return flag
   }
@@ -681,7 +914,7 @@
         
         for(let i in arr_id){
           let temp_data = card_result_data.find(card => card.id == arr_id[i])
-          console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.code_card)
+          // console.log(temp_data.id+"-"+temp_data.img+"-"+temp_data.code_card)
           for(let x=0;x<temp.length;x++){
             temp_result = temp[x].split(":");
             if(temp_result[0] == temp_data.code_card){
@@ -1244,6 +1477,60 @@
     // shuffleArray.push(array[29]);
     // console.log(shuffleArray)
 
+    // ==== 4 OF A KIND ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[6]);
+    // shuffleArray.push(array[19]);
+    // shuffleArray.push(array[32]);
+    // shuffleArray.push(array[45]);
+    // shuffleArray.push(array[8]);
+    // shuffleArray.push(array[31]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
+
+    // ==== STRAIGHT FLUSH ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[0]);
+    // shuffleArray.push(array[1]);
+    // shuffleArray.push(array[2]);
+    // shuffleArray.push(array[3]);
+    // shuffleArray.push(array[4]);
+    // shuffleArray.push(array[31]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
+
+    // ==== 5 OF A KIND 1 ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[0]);
+    // shuffleArray.push(array[13]);
+    // shuffleArray.push(array[26]);
+    // shuffleArray.push(array[39]);
+    // shuffleArray.push(array[52]);
+    // shuffleArray.push(array[31]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
+    
+    // ==== 5 OF A KIND 2 ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[0]);
+    // shuffleArray.push(array[13]);
+    // shuffleArray.push(array[26]);
+    // shuffleArray.push(array[53]);
+    // shuffleArray.push(array[52]);
+    // shuffleArray.push(array[31]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
+
+    // ==== ROYAL FLUSH ===
+    // shuffleArray = [];
+    // shuffleArray.push(array[47]);
+    // shuffleArray.push(array[48]);
+    // shuffleArray.push(array[49]);
+    // shuffleArray.push(array[50]);
+    // shuffleArray.push(array[51]);
+    // shuffleArray.push(array[31]);
+    // shuffleArray.push(array[29]);
+    // console.log(shuffleArray)
   }
   function shuffleArray_bet(){
     if(count_bet == 4){
