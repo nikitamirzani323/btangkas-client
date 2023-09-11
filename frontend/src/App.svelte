@@ -149,6 +149,7 @@
   let info_card = [];
   let isModalMinBet = false;
   let isModal_allinvoice = false;
+  let isModal_carabermain = false;
   let flag_win = false
   let shuffleArray = [];
   let usedIndexes = [];
@@ -1787,6 +1788,9 @@
     isModal_allinvoice = true
     // fetch_invoicell()
 	};
+  const call_carabermain = () => {
+    isModal_carabermain = true
+	};
 </script>
 
 <main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-screen lg:h-full">
@@ -1801,7 +1805,10 @@
       <div class="flex flex-row gap-2">
           <label on:click={() => {
             call_allinvoice();
-          }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50">INVOICE</label>
+          }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50 btn-sm">INVOICE</label>
+          <label on:click={() => {
+            call_carabermain();
+          }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50 btn-sm">CARA BERMAIN</label>
       </div>
     </div>
     <div class="navbar-end hidden text-xs lg:text-sm lg:inline-block text-right">
@@ -1938,6 +1945,16 @@
  
 </main>
 
+<footer class="footer footer-center p-4 text-base-content mt-2 text-center">
+  <div class="grid">
+    <p class="text-xs lg:text-sm text-center">
+      0.0.1
+      <br />
+      PowerBy
+    </p>
+    <img src="https://sdsb4d.com/logo-green.svg" alt="SDSB" class="w-24 lg:w-28">
+  </div>
+</footer>
 
 <input type="checkbox" id="my-modal-information" class="modal-toggle" bind:checked={isModalMinBet}>
 <div class="modal" on:click|self={()=>isModalMinBet = false}>
@@ -2013,6 +2030,17 @@
                 {/each}
             </tbody>
         </table>
+    </div>
+  </div>
+</div>
+
+<input type="checkbox" id="my-modal-carabermain" class="modal-toggle" bind:checked={isModal_carabermain}>
+<div class="modal" on:click|self={()=>isModal_carabermain = false}>
+  <div class="modal-box relative select-none  lg:max-w-4xl h-full lg:max-h-[600px] rounded-none lg:rounded-lg p-2 lg:p-4 overflow-hidden">
+    <label for="my-modal-carabermain" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+    <h3 class="text-xs lg:text-sm font-bold -mt-1">CARA BERMAIN</h3>
+    <div class="overflow-auto h-[90%] scrollbar-thin scrollbar-thumb-green-100 mt-4">
+        
     </div>
   </div>
 </div>
