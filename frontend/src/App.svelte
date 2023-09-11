@@ -1793,7 +1793,7 @@
 	};
 </script>
 
-<main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-screen lg:h-full">
+<main class="container mx-auto px-2 text-base-content glass xl:rounded-box xl:mt-7 max-w-screen-xl bg-opacity-60 pb-5 h-fit lg:h-full">
   <div class="navbar">
     <div class="navbar-start">
       <a href="/?token=" >
@@ -1830,6 +1830,30 @@
         </div>
     </div>
   </div>
+
+  <section class="flex lg:hidden justify-center w-full mb-2 gap-2 bg-base-200 p-2 rounded-md">
+    <p class="w-full text-xs  text-left">
+      Asia/Jakarta <br />
+      {clockmachine}  WIB (+7)<br>
+      developer <br />
+      {client_ipaddress}
+    </p>
+    <p class="w-full text-xs  text-right">
+      CREDIT : IDR <span class="link-accent" style="--value:15;">{new Intl.NumberFormat().format(credit)}</span>
+      <span class="{point_style_result}">{point_result}</span>
+      <br />
+      ROUND BET {totalbet}x : <span class="text-error">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
+    </p>
+  </section>
+
+  <section class="flex lg:hidden justify-center w-full mb-3 gap-2">
+    <div on:click={() => {
+      call_allinvoice();
+    }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50 btn-xs">INVOICE</div>
+    <div on:click={() => {
+      call_carabermain();
+    }} class="btn bg-base-300 border-none shadow-lg shadow-green-500/50 btn-xs">CARA BERMAIN</div>
+  </section>
 
   <section class="w-full select-none rounded-md p-2 mt-2 bg-base-100  ">
     <div class="grid grid-cols-2 w-full ">
@@ -1903,8 +1927,8 @@
       </div>
     </div>
   </section>
-  <section class="flex w-full mt-5 gap-2">
-    <div class="flex w-full p-0 justify-end">
+  <section class="flex flex-col lg:flex-row w-full mt-5 gap-2">
+    <div class="flex w-full p-0 justify-center lg:justify-end">
       <div class="flex flex-col w-1/3 ">
         <span class="text-sm lg:text-lg w-full text-center">Minimal Bet</span>
         <div class=" bg-base-300 text-lg p-2 w-full cursor-pointer text-center rounded-lg" on:click={() => {
@@ -1914,26 +1938,26 @@
         </div>
       </div>
     </div>
-    <div class="flex place-self-end gap-1 w-full ">
+    <div class="flex mt-1 lg:mt-0  lg:place-self-end gap-1 w-full ">
       {#if flag_all}
         {#if !flag_bet}
           <button on:click={() => {
               call_play();
-            }} class="btn btn-success btn-md w-[240px]">Play</button>
+            }} class="btn btn-success btn-md w-full lg:w-[240px]">Play</button>
         {/if}
         {#if flag_bet}
           <button on:click={() => {
               call_bet();
-            }} class="btn btn-primary btn-md w-[120px]" >BET</button>
+            }} class="btn btn-primary btn-md w-1/2 lg:w-[120px]" >BET</button>
           {#if flag_fullbet}
           <button on:click={() => {
               call_fullbet();
-            }} class="btn btn-primary btn-md w-[120px]" >FULL BET</button>
+            }} class="btn btn-primary btn-md w-1/2 lg:w-[120px]" >FULL BET</button>
           {/if}
           {#if flag_deal}
           <button on:click={() => {
               call_deal();
-            }} class="btn btn-primary btn-md w-[120px]">DEAL</button>
+            }} class="btn btn-primary btn-md w-1/2 lg:w-[120px]">DEAL</button>
           {/if}
         {/if}
       {/if}
@@ -1955,7 +1979,7 @@
 
 <input type="checkbox" id="my-modal-information" class="modal-toggle" bind:checked={isModalMinBet}>
 <div class="modal" on:click|self={()=>isModalMinBet = false}>
-    <div class="modal-box relative w-11/12 max-w-lg h-1/4 overflow-hidden select-none">
+    <div class="modal-box relative w-11/12 max-w-lg h-1/2 lg:h-1/4 overflow-hidden select-none">
         <label for="my-modal-information" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
         <h3 class="text-xs lg:text-sm font-bold -mt-2">MINIMAL BET</h3>
         <div class="h-fit overflow-auto scrollbar-hide mt-2" >
