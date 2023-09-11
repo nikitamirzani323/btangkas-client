@@ -1910,7 +1910,7 @@
     <div class="flex w-full p-0 justify-end">
       <div class="flex flex-col w-1/3 ">
         <span class="text-sm lg:text-lg w-full text-center">Minimal Bet</span>
-        <div class=" bg-black text-lg p-2 w-full cursor-pointer text-center rounded-sm" on:click={() => {
+        <div class=" bg-base-300 text-lg p-2 w-full cursor-pointer text-center rounded-lg" on:click={() => {
           handleInformation();
           }}>
           <span class="text-center link-accent">{new Intl.NumberFormat().format(min_bet)}</span>
