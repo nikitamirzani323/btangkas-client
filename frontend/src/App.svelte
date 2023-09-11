@@ -1944,7 +1944,7 @@
               <span class="{point_style_result}">{point_result}</span>
             </div>
             <div class="w-full text-xs lg:text-sm text-right ">
-              ROUND BET {totalbet}x : <span class="text-error">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
+              ROUND BET {totalbet}x<span class="link-accent">{min_bet}</span> : <span class="text-error">{new Intl.NumberFormat().format(min_bet*totalbet)}</span>
             </div>
           </div>
         </div>
@@ -2063,12 +2063,12 @@
         {#if !flag_bet}
           <button on:click={() => {
               call_play();
-            }} class="btn btn-success btn-md w-full lg:w-[240px]">Play</button>
+            }} class="btn btn-success btn-md w-full lg:w-[240px] ">Play</button>
         {/if}
         {#if flag_bet}
           <button on:click={() => {
               call_bet();
-            }} class="btn btn-primary btn-md w-1/2 lg:w-[120px]" >BET</button>
+            }} class="btn btn-primary btn-md w-1/2 lg:w-[120px] ">BET</button>
           {#if flag_fullbet}
           <button on:click={() => {
               call_fullbet();
